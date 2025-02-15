@@ -12,7 +12,7 @@ ide: clear-log
 	docker-compose up postgres
 
 all: clear-log
-	docker-compose up postgres pgadmin4
+	docker-compose up postgres pgadmin
 
 install:
 	@printf "Installing application dependencies using Gradle..."
