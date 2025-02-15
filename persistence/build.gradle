@@ -17,3 +17,10 @@ dependencies {
     // Postgres
     runtimeOnly "org.postgresql:postgresql:${versions.postgres}"
 }
+
+sonar {
+    properties {
+        property "sonar.projectKey", "GillesAndrieu_onefreelance-persistence"
+        property "sonar.projectName", "OneFreelance | Persistence"
+    }
+}
