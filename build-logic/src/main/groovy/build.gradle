@@ -13,5 +13,7 @@ ext.versions = [
         jqwik         : '1.9.2',
         jakartaXml    : '2.3.3',
         testcontainers: '1.19.8',
-        dbunit        : '6.0.0'
+        dbunit        : '6.0.0',
+        // fix vulnerabilities
+        commonCompress: '1.27.1'
 ]

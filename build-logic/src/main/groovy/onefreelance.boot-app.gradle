@@ -48,6 +48,10 @@ dependencies {
     // Jakarta
     runtimeOnly "jakarta.xml.bind:jakarta.xml.bind-api:${versions.jakartaXml}"
     // -------------------------
+    // Fix vulnerabilities
+    // -------------------------
+    implementation "org.apache.commons:commons-compress:${versions.commonCompress}"
+    // -------------------------
     // Test dependencies
     // -------------------------
     testImplementation "org.springframework.boot:spring-boot-starter-test"
