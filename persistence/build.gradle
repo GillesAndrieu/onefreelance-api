@@ -20,7 +20,7 @@ dependencies {
 
 sonar {
     properties {
-        property "sonar.projectKey", "GillesAndrieu_onefreelance-persistence"
+        property "sonar.projectKey", "grisbibi_onefreelance-persistence"
         property "sonar.projectName", "OneFreelance | Persistence"
     }
 }

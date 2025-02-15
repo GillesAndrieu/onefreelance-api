@@ -20,7 +20,7 @@ bootJar {
 
 sonar {
     properties {
-        property "sonar.projectKey", "GillesAndrieu_onefreelance-api"
+        property "sonar.projectKey", "grisbibi_onefreelance-api"
         property "sonar.projectName", "OneFreelance | Api"
     }
 }

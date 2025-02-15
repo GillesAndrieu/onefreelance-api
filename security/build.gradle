@@ -12,7 +12,7 @@ dependencies {
 
 sonar {
     properties {
-        property "sonar.projectKey", "GillesAndrieu_onefreelance-security"
+        property "sonar.projectKey", "grisbibi_onefreelance-security"
         property "sonar.projectName", "OneFreelance | security"
     }
 }
