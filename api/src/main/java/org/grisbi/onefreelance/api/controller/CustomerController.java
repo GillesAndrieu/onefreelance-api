@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Customer rest controller.
  */
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/v1/customer")
 @RequiredArgsConstructor
 @Validated
@@ -72,7 +74,7 @@ public class CustomerController {
   @PostCustomerDocumentation
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CustomerResponse> postCustomer(@Valid @RequestBody final CustomerRequest customerRequest) {
-    return ResponseEntity.created(URI.create("/customer/v1/"))
+    return ResponseEntity.created(URI.create("/v1/customer"))
         .body(customerService.createCustomer(customerRequest));
   }
 

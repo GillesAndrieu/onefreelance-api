@@ -32,6 +32,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.security:spring-security-oauth2-jose"
     implementation "org.springframework.security:spring-security-oauth2-resource-server"
+    // Auth JWT
+    implementation "com.auth0:java-jwt:${versions.javaJwt}"
     // Swagger
     implementation "io.swagger.core.v3:swagger-core:${versions.swagger}"
     // Vavr
@@ -57,6 +59,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation "org.springframework.security:spring-security-oauth2-jose"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:${versions.junit}"
     testImplementation "org.instancio:instancio-junit:${versions.instancio}"
     testImplementation "net.jqwik:jqwik:${versions.jqwik}"
@@ -64,4 +67,5 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
     testImplementation "org.mockito:mockito-core"
     testImplementation "org.mockito:mockito-inline:${versions.mockito}"
+    testImplementation "com.auth0:java-jwt:${versions.javaJwt}"
 }

@@ -1,7 +1,7 @@
 package org.grisbi.onefreelance.persistence.converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vavr.control.Try;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +21,13 @@ public abstract class JsonConverter<T> implements AttributeConverter<T, String> 
 
   @Override
   public String convertToDatabaseColumn(T object) {
-    try {
-      return objectMapper.writeValueAsString(object);
-    } catch (JsonProcessingException jpe) {
-      log.warn("Cannot convert Address into JSON");
-      return null;
-    }
+    return Try.of(() -> objectMapper.writeValueAsString(object))
+        .getOrElseThrow(() -> new IllegalArgumentException("Unable to convert object to JSON: " + object));
   }
 
   @Override
   public T convertToEntityAttribute(String value) {
-    try {
-      return objectMapper.readValue(value, clazz);
-    } catch (JsonProcessingException e) {
-      log.warn("Cannot convert JSON into Address");
-      return null;
-    }
+    return Try.of(() -> objectMapper.readValue(value, clazz))
+        .getOrElseThrow(() -> new IllegalArgumentException("Cannot convert " + value + " into " + clazz.getName()));
   }
 }

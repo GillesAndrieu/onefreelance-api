@@ -6,6 +6,7 @@ ext.versions = [
         junit         : '1.11.4',
         mockito       : '5.2.0',
         vavr          : '0.10.5',
+        javaJwt       : '4.4.0',
         mapstruct     : '1.6.3',
         jackson       : '2.18.2',
         swagger       : '2.2.28',
