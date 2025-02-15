@@ -16,7 +16,7 @@
 
 ## Build and Run
 
-    #/tools/docker> docker-compose up -d 
+    #/tools> docker-compose up -d 
     #/api> gradle clean build
     #/api> gradle bootRun
 
