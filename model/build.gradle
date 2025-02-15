@@ -9,3 +9,10 @@ version = loadVersion().getVersion()
 dependencies {
 
 }
+
+sonar {
+    properties {
+        property "sonar.projectKey", "grisbibi_onefreelance-model"
+        property "sonar.projectName", "OneFreelance | Model"
+    }
+}
