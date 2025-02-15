@@ -50,7 +50,7 @@ dependencies {
     // -------------------------
     // Fix vulnerabilities
     // -------------------------
-    implementation 'org.apache.commons:commons-compress:${versions.commonCompress}'
+    implementation "org.apache.commons:commons-compress:${versions.commonCompress}"
     // -------------------------
     // Test dependencies
     // -------------------------
