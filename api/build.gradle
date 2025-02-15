@@ -17,3 +17,10 @@ bootJar {
     archiveFileName = "api-${version}.jar"
     mainClass = 'org.grisbi.onefreelance.api.FreelanceApplication'
 }
+
+sonar {
+    properties {
+        property "sonar.projectKey", "grisbibi_onefreelance-api"
+        property "sonar.projectName", "OneFreelance | Api"
+    }
+}

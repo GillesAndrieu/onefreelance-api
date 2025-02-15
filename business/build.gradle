@@ -10,3 +10,10 @@ dependencies {
     implementation project(":model")
     implementation project(":persistence")
 }
+
+sonar {
+    properties {
+        property "sonar.projectKey", "grisbibi_onefreelance-business"
+        property "sonar.projectName", "OneFreelance | Business"
+    }
+}
