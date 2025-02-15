@@ -31,7 +31,7 @@ jobs:
 
       # Autolabel (through release-drafter) - add labels to the PR based on the prefix of the PR name (chore, fix, feat...)
       - name: Autolabel (through release-drafter) - add labels to the PR based on the PR name
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RESOLVED_VERSION: ${{ steps.release-calc.outputs.release-number }}
