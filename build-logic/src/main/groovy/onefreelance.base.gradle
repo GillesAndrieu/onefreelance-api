@@ -31,6 +31,7 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "grisbibi"
         property "sonar.projectKey", "GillesAndrieu_onefreelance-api"
+        property "sonar.projectName", "OneFreelance | Api"
         property "sonar.exclusions", "**/dto/**/*.java,**/entity/*.java,**/mappers/*.java,**/*Config.java,**/*Configuration.java,**/*Properties.java, **/swagger/*.java, **/*Application.java"
     }
 }
