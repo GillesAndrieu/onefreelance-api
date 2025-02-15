@@ -7,7 +7,7 @@ apply from: '../version.gradle'
 version = loadVersion().getVersion()
 
 dependencies {
-
+    implementation project(":persistence")
 }
 
 sonar {

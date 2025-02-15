@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * The application configuration.
  */
 @Configuration
-@EntityScan
-@EnableJpaRepositories
+@EntityScan("org.grisbi.onefreelance.persistence")
+@EnableJpaRepositories("org.grisbi.onefreelance.persistence")
 public class ApplicationConfig {
 }
