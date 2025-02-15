@@ -1,0 +1,77 @@
+# This is a workflow use when we create a pull request
+
+name: Build - PR
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on main/develop branch based pull request event
+  pull_request:
+    branches:
+      - 'main'
+    paths-ignore:
+      - '**.md'
+      - '**.png'
+      - '.gitignore'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+
+jobs:
+  autolabel-pr:
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get release name of target branch
+        id: release-calc
+        run: |
+          echo "release-number=$(echo '${{ github.event.pull_request.base.ref }}' | cut -d / -f 2)" >> $GITHUB_OUTPUT
+
+      # Autolabel (through release-drafter) - add labels to the PR based on the prefix of the PR name (chore, fix, feat...)
+      - name: Autolabel (through release-drafter) - add labels to the PR based on the PR name
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESOLVED_VERSION: ${{ steps.release-calc.outputs.release-number }}
+
+  build-test:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.set-tag.outputs.tag }}
+    permissions:
+      contents: read
+      id-token: write # Mandatory
+      pull-requests: write # Mandatory
+      statuses: write # Mandatory
+      issues: write # Mandatory
+      checks: write # Mandatory
+      packages: write # needed for push of package
+      repository-projects: read
+    name: Test - Analyze apps
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set tag
+        id: set-tag
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          echo "tag=$PR_NUMBER-$(git rev-parse --short $HEAD)" >> $GITHUB_OUTPUT
+
+      - id: build-app
+        name: Build App
+        uses: ./.github/actions/build-app
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - id: build-images
+        name: Api - Build image
+        uses: ./.github/actions/build-images
+        with:
+          MODULE: "api"
+          GITHUB_SHA: "${{ steps.set-tag.outputs.tag }}"
+          GITHUB_OUTPUT: $GITHUB_OUTPUT

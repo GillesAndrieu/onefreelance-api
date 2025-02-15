@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: oneFreelance
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: NON_NULL
+  flyway:
+    enabled: false
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${PG_URL_LINK:jdbc:postgresql://localhost:5432/onefreelance?currentSchema=onefreelance}
+    username: ${PG_USERNAME:admin}
+    password: ${PG_PASSWORD:admin}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: false

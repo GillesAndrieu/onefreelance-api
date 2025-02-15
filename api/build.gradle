@@ -1,0 +1,19 @@
+plugins {
+    id 'onefreelance.boot-app'
+}
+
+group "org.grisbi.onefreelance"
+apply from: '../version.gradle'
+version = loadVersion().getVersion()
+
+dependencies {
+    implementation project(":business")
+    implementation project(":model")
+    implementation project(":security")
+}
+
+bootJar {
+    enabled = true
+    archiveFileName = "api-${version}.jar"
+    mainClass = 'org.grisbi.onefreelance.api.FreelanceApplication'
+}

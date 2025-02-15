@@ -1,0 +1,45 @@
+HELP.md
+.gradle
+.DS_STORE
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+bin/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### DB data ###
+tools/.log
+tools/docker/data
+
+### VS Code ###
+.vscode/
+/ui/node_modules/
+/ui/dist/
+
+### UT ###
+.jqwik-database

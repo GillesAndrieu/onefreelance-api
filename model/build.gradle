@@ -1,0 +1,11 @@
+plugins {
+    id 'onefreelance.shared-jar'
+}
+
+group "org.grisbi.onefreelance"
+apply from: '../version.gradle'
+version = loadVersion().getVersion()
+
+dependencies {
+
+}

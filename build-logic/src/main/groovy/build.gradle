@@ -1,0 +1,17 @@
+ext.versions = [
+        flyway        : '11.2.0',
+        lombok        : '1.18.36',
+        postgres      : '42.7.5',
+        hibernate     : '6.6.4.Final',
+        junit         : '1.11.4',
+        mockito       : '5.2.0',
+        vavr          : '0.10.5',
+        mapstruct     : '1.6.3',
+        jackson       : '2.18.2',
+        swagger       : '2.2.28',
+        instancio     : '5.3.0',
+        jqwik         : '1.9.2',
+        jakartaXml    : '2.3.3',
+        testcontainers: '1.19.8',
+        dbunit        : '6.0.0'
+]

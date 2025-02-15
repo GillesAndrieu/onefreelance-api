@@ -1,0 +1,44 @@
+# Subworkflows (reusable workflows) must be in the .github/workflows folder
+name: 'Build App'
+description: 'Build the App'
+inputs:
+  GITHUB_TOKEN: # id of input
+    description: 'The github token'
+    required: true
+  SONAR_TOKEN: # id of input
+    description: 'The sonar token'
+    required: true
+runs:
+  using: "composite"
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 23
+        settings-path: ${{ github.workspace }}
+
+    - name: Cache SonarQube packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
+
+    - name: Test the application and analyse it
+      run: ./gradlew build test jacocoTestReport sonar --i
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}

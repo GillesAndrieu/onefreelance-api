@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <customer id="f1aa6642-7e5d-49a8-940e-55a6f258bd68"
+              profile='{""email"": ""john.doe@gmail.com"", ""roles"": [""ROLE_USER""], ""active"": true, ""lastname"": ""DOE"", ""firstname"": ""John"", ""update_at"": ""2025-02-14T21:57:38.104330Z""}'
+              create_at="2025-02-14 21:57:38.104339"
+    />
+</dataset>

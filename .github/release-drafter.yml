@@ -1,0 +1,58 @@
+name-template: 'One Freelance Api v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+version-template: '$MAJOR.$MINOR.$PATCH'
+prerelease: true
+categories:
+  - title: '🚨 Breaking changes'
+    labels:
+      - 'breaking-change'
+  - title: '🚀 Features'
+    labels:
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+  - title: '🧰 Meta'
+    labels:
+      - 'configuration'
+      - 'ci'
+      - 'documentation'
+  - title: '🏭 Libraries update'
+    label: 'dependencies'
+exclude-labels:
+  - 'security'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+template: |
+  ## Uncategorized
+  $CHANGES
+replacers:
+  - search: '/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([\w-]*\))*:\s*(.*)/g'
+    replace: '$3'
+autolabeler:
+  - label: 'configuration'
+    files:
+      - '.*\\.(config|editorconfig|properties|sql|application)+$'
+    title:
+      - '/^(style|perf|test|chore)(\([\w-]*\))*:\s*.*/i'
+  - label: 'breaking-change'
+    title:
+      - '/^(refactor)(\([\w-]*\))*:\s*.*/i'
+  - label: 'security'
+    title:
+      - '/^(common\(security\)):\s*.*/i'
+  - label: 'ci'
+    files:
+      - '.*(workflows|github).*\.yml$'
+    title:
+      - '/^(ci)(\([\w-]*\))*:\s*.*/i'
+  - label: 'dependencies'
+    files:
+      - '.*\.gradle'
+    title:
+      - '.*\\.(gradle)+$'
+  - label: 'bug'
+    title:
+      - '/^(fix|revert)(\([\w-]*\))*:\s*.*/i'
+  - label: 'enhancement'
+    title:
+      - '/^(feat)(\([\w-]*\))*:\s*.+/i'

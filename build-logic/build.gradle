@@ -1,0 +1,18 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal()
+}
+
+// PLUGIN VERSION
+def spring_dependency_management_plugin = "1.1.7"
+def spring_boot_plugin = "3.4.1"
+def sonar_qube_plugin = "6.0.1.5171"
+
+dependencies {
+    implementation "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonar_qube_plugin"
+    implementation "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_plugin"
+    implementation "io.spring.gradle:dependency-management-plugin:$spring_dependency_management_plugin"
+}

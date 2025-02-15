@@ -1,0 +1,19 @@
+plugins {
+    id 'onefreelance.shared-jar'
+}
+
+group "org.grisbi.onefreelance"
+apply from: '../version.gradle'
+version = loadVersion().getVersion()
+
+dependencies {
+    implementation project(":model")
+
+    // Jpa
+    implementation "org.hibernate.orm:hibernate-core:${versions.hibernate}"
+    // Flyway
+    implementation "org.flywaydb:flyway-core:${versions.flyway}"
+    implementation "org.flywaydb:flyway-database-postgresql:${versions.flyway}"
+    // Postgres
+    runtimeOnly "org.postgresql:postgresql:${versions.postgres}"
+}

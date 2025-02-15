@@ -1,0 +1,3 @@
+CREATE
+DATABASE IF NOT EXISTS onefreelance;
+CREATE SCHEMA IF NOT EXISTS onefreelance;

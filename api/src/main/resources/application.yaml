@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: oneFreelance
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: NON_NULL
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    baseline-version: 0.0
+    locations: [ 'classpath:db/migration' ]
+    url: ${PG_UL:jdbc:postgresql://localhost:5432/onefreelance}
+    schemas: ${PG_SCHEMA:onefreelance}
+    user: ${PG_USERNAME:admin}
+    password: ${PG_PASSWORD:admin}
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${PG_URL_LINK:jdbc:postgresql://localhost:5432/onefreelance?currentSchema=onefreelance}
+    username: ${PG_USERNAME:admin}
+    password: ${PG_PASSWORD:admin}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: openid,profile,email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: WARN
+    org.springframework.security.oauth2: WARN
+    org.hibernate.orm: WARN

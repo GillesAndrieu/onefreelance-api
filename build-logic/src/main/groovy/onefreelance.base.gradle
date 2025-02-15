@@ -1,0 +1,36 @@
+plugins {
+    id "java"
+    id "org.sonarqube"
+    id "jacoco"
+}
+
+java {
+    sourceCompatibility = '23'
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "grisbi"
+        property "sonar.projectKey", "GillesAndrieu_onefreelance-api"
+        property "sonar.exclusions", "**/dto/**/*.java,**/entity/*.java,**/mappers/*.java,**/*Config.java,**/*Configuration.java,**/*Properties.java, **/swagger/*.java, **/*Application.java"
+    }
+}

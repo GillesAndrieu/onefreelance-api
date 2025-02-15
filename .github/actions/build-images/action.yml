@@ -1,0 +1,35 @@
+# Subworkflows (reusable workflows) must be in the .github/workflows folder
+name: 'Build app image'
+description: 'Build app image'
+inputs:
+  MODULE:
+    description: 'The module name'
+    required: true
+  GITHUB_SHA:
+    description: 'The github SHA'
+    required: true
+  GITHUB_OUTPUT:
+    description: 'The github output'
+    required: true
+
+runs:
+  using: "composite"
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+    - name: Declare docker image name variable
+      run: |
+        echo "docker_image_name=$MODULE:$TAG" >> $GITHUB_OUTPUT
+      env:
+        MODULE: ${{ inputs.MODULE }}
+        TAG: ${{ inputs.GITHUB_SHA }}
+        GITHUB_OUTPUT: ${{ inputs.GITHUB_OUTPUT }}
+      id: image_name_var
+      shell: bash
+
+    - name: Build docker image with qualif tag
+      run: |
+        docker build --build-arg module_name=$MODULE -t "$DOCKER_IMAGE_NAME" -f Dockerfile .
+      shell: bash
+      env:
+        MODULE: ${{ inputs.MODULE }}
+        DOCKER_IMAGE_NAME: ${{ steps.image_name_var.outputs.docker_image_name }}

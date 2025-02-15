@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17.2-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      PGDATA: /data/postgres
+    volumes:
+      - type: bind
+        source: ./docker/data/postgres-data
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
