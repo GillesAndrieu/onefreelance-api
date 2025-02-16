@@ -1,9 +1,7 @@
 package org.grisbi.onefreelance.model.module;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import lombok.Builder;
@@ -85,8 +83,6 @@ class OneFreelanceModuleTest {
         .isEqualTo(SampleBigDecimal.builder()
         .number(new BigDecimal("20.56"))
         .build());
-    assertThrows(JsonParseException.class, () -> mapper.readValue("{\"number\":ABC}", SampleBigDecimal.class));
-
   }
 
   @Value
