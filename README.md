@@ -29,14 +29,21 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Functional promise](#functional-promise)
-    - [CI / CD](#ci-cd)
-        - [Github Actions](#github-actions)
-    - [Team's Dev Guidelines](#teams-dev-guidelines)
-    - [How-to's Intellij configuration](#intellij-ide-configuration)
+- [Link utils](#link-utils)
+- [CI / CD](#ci--cd)
+    - [Github Actions](#github-actions)
+- [Team's Dev Guidelines](#teams-dev-guidelines)
+- [How-to's Intellij configuration](#intellij-ide-configuration)
 
 ## Functional promise
 
 OneFreelance ambition is the ability for all customers to create and manage the enterprise.
+
+## Link utils
+
+- http://localhost:8080/actuator/health
+- http://localhost:8080/swagger-ui/index.html
+- http://localhost:8080/v3/api-docs.yaml
 
 ## CI / CD
 

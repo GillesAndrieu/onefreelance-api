@@ -37,6 +37,13 @@ spring:
           issuer-uri: https://accounts.google.com
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 
+springdoc:
+  enable-hateoas: false
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    operationsSorter: method
+
 logging:
   level:
     root: INFO
