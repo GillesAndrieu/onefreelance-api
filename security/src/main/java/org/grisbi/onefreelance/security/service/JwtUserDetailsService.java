@@ -2,6 +2,7 @@ package org.grisbi.onefreelance.security.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.grisbi.onefreelance.model.dto.Role;
 import org.grisbi.onefreelance.persistence.entity.CustomerEntity;
 import org.grisbi.onefreelance.persistence.repository.CustomerRepository;
 import org.grisbi.onefreelance.security.dto.JwtUserDetails;
@@ -30,9 +31,10 @@ public class JwtUserDetailsService implements UserDetailsService {
   public JwtUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     final CustomerEntity customer = customerRepository.findByProfileEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException(email));
-    final List<SimpleGrantedAuthority> roles = customer.getProfile()
+    final List<SimpleGrantedAuthority> roles = customer.getCustomerData()
         .getRoles()
         .stream()
+        .map(Role::getRoleName)
         .map(SimpleGrantedAuthority::new)
         .toList();
     return new JwtUserDetails(customer.getId(), email, roles);

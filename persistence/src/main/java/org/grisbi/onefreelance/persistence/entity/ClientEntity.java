@@ -8,25 +8,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.grisbi.onefreelance.model.dto.Role;
-import org.grisbi.onefreelance.persistence.converter.CustomerDataConverter;
+import org.grisbi.onefreelance.model.dto.Address;
+import org.grisbi.onefreelance.persistence.converter.ClientDataConverter;
 import org.hibernate.annotations.ColumnTransformer;
 
 /**
- * Customer entity.
+ * Client entity.
  */
-@Entity(name = "customer")
+@Entity(name = "client")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEntity implements Serializable {
+public class ClientEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,26 +34,25 @@ public class CustomerEntity implements Serializable {
   @Column(updatable = false)
   private Instant createAt;
 
-  @Convert(converter = CustomerDataConverter.class)
+  @Convert(converter = ClientDataConverter.class)
   @ColumnTransformer(write = "?::jsonb")
   @Column(columnDefinition = "jsonb")
-  private CustomerDataEntity customerData;
+  private ClientDataEntity clientData;
 
   /**
-   * Profile entity.
+   * Data entity.
    */
   @Data
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public static class CustomerDataEntity implements Serializable {
+  public static class ClientDataEntity implements Serializable {
 
-    private String firstname;
-    private String lastname;
-    private String email;
-    @Builder.Default
-    private List<Role> roles = List.of();
-    private Boolean active;
+    private UUID customerId;
+    private String name;
+    private Address address;
+    private String siret;
+    private String referent;
     @Builder.Default
     private Instant updateAt = Instant.now();
   }

@@ -1,7 +1,7 @@
 package org.grisbi.onefreelance.persistence.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.grisbi.onefreelance.persistence.entity.CustomerEntity.ProfileEntity;
+import static org.grisbi.onefreelance.persistence.entity.CustomerEntity.CustomerDataEntity;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class ProfileConverterTest {
+class CustomerDataConverterTest {
 
   @Mock
   ObjectMapper objectMapperError;
@@ -30,16 +30,16 @@ class ProfileConverterTest {
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
       .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
       .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-  private ProfileConverter profileConverter;
+  private CustomerDataConverter profileConverter;
 
   @BeforeEach
   public void init() {
-    this.profileConverter = new ProfileConverter(objectMapper);
+    this.profileConverter = new CustomerDataConverter(objectMapper);
   }
 
   @Test
   void testConvertToString() {
-    final var profileEntity = Instancio.create(ProfileEntity.class);
+    final var profileEntity = Instancio.create(CustomerDataEntity.class);
 
     final var converterResult = profileConverter.convertToDatabaseColumn(profileEntity);
 
@@ -49,12 +49,12 @@ class ProfileConverterTest {
 
   @Test
   void testConvertToString_error() throws JsonProcessingException {
-    final var profileEntity = ProfileEntity.builder().build();
+    final var profileEntity = CustomerDataEntity.builder().build();
     given(objectMapperError.writeValueAsString(any())).willThrow(new JsonProcessingException(""){});
 
-    final var convertErrot = new ProfileConverter(objectMapperError);
+    final var convertError = new CustomerDataConverter(objectMapperError);
     assertThrows(IllegalArgumentException.class,
-        () -> convertErrot.convertToDatabaseColumn(profileEntity));
+        () -> convertError.convertToDatabaseColumn(profileEntity));
   }
 
   @Test

@@ -53,7 +53,7 @@ public class CustomerService {
    * Create new customer.
    *
    * @param customerRequest information
-   * @return customer reesponse
+   * @return customer response
    */
   public CustomerResponse createCustomer(final CustomerRequest customerRequest) {
     final CustomerEntity customerEntity = customerRepository

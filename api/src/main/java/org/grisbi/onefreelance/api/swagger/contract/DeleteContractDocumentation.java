@@ -1,4 +1,4 @@
-package org.grisbi.onefreelance.api.swagger.customer;
+package org.grisbi.onefreelance.api.swagger.contract;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,17 +12,17 @@ import java.lang.annotation.Target;
 import org.grisbi.onefreelance.model.errors.ApiError;
 
 /**
- * Swagger : DeleteCustomerDocumentation.
+ * Swagger : DeleteContractDocumentation.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "Delete customer",
-    description = "Delete customer information.",
+@Operation(summary = "Delete contract",
+    description = "Delete contract information.",
     security = {@SecurityRequirement(name = "jwt")},
     responses = {
         @ApiResponse(
             responseCode = "204",
-            description = "The customer deleted"
+            description = "The contract deleted"
         ),
         @ApiResponse(
             responseCode = "401",
@@ -32,6 +32,6 @@ import org.grisbi.onefreelance.model.errors.ApiError;
                 schema = @Schema(
                     implementation = ApiError.class))),
     })
-public @interface DeleteCustomerDocumentation {
+public @interface DeleteContractDocumentation {
 }
 

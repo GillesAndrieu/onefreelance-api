@@ -59,4 +59,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core"
     testImplementation "org.mockito:mockito-inline:${versions.mockito}"
     testImplementation "com.auth0:java-jwt:${versions.javaJwt}"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${versions.jackson}"
+    testImplementation "org.projectlombok:lombok:${versions.lombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
 }

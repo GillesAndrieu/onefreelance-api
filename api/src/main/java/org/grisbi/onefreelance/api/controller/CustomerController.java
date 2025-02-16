@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/customer")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Customer", description = "Use these API with for all customer action")
+@Tag(name = "Customer", description = "Use these API with JWT for all customer action")
 public class CustomerController {
 
   private final CustomerService customerService;
