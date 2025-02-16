@@ -14,7 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> {
 
-  @Query(value = "SELECT c.id, c.profile, c.create_at FROM customer c WHERE profile ->> 'email' = :email",
+  @Query(value = "SELECT c.id, c.profile, c.create_at FROM customer c "
+      + "WHERE profile ->> 'email' = :email AND profile ->> 'active' = 'true'",
       nativeQuery = true)
   Optional<CustomerEntity> findByProfileEmail(@Param("email") String email);
 }
