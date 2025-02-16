@@ -39,11 +39,11 @@ class CustomerServiceTest {
     final var customerEntity = Instancio.create(CustomerEntity.class);
     final var customerResponse = Instancio.of(CustomerResponse.class)
         .set(field(CustomerResponse::getId), customerEntity.getId())
-        .set(field(CustomerResponse::getFirstname), customerEntity.getProfile().getFirstname())
-        .set(field(CustomerResponse::getLastname), customerEntity.getProfile().getLastname())
-        .set(field(CustomerResponse::getActive), customerEntity.getProfile().getActive())
-        .set(field(CustomerResponse::getEmail), customerEntity.getProfile().getEmail())
-        .set(field(CustomerResponse::getRoles), customerEntity.getProfile().getRoles())
+        .set(field(CustomerResponse::getFirstname), customerEntity.getCustomerData().getFirstname())
+        .set(field(CustomerResponse::getLastname), customerEntity.getCustomerData().getLastname())
+        .set(field(CustomerResponse::getActive), customerEntity.getCustomerData().getActive())
+        .set(field(CustomerResponse::getEmail), customerEntity.getCustomerData().getEmail())
+        .set(field(CustomerResponse::getRoles), customerEntity.getCustomerData().getRoles())
         .create();
     given(customerMapper.toCustomerResponse(customerEntity)).willReturn(customerResponse);
     given(customerRepository.findById(any())).willReturn(Optional.of(customerEntity));
@@ -51,11 +51,11 @@ class CustomerServiceTest {
     final var customer = customerService.getCustomer(UUID.randomUUID());
 
     assertThat(customer.getId()).isEqualTo(customerEntity.getId());
-    assertThat(customer.getActive()).isEqualTo(customerEntity.getProfile().getActive());
-    assertThat(customer.getLastname()).isEqualTo(customerEntity.getProfile().getLastname());
-    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getProfile().getFirstname());
-    assertThat(customer.getEmail()).isEqualTo(customerEntity.getProfile().getEmail());
-    assertThat(customer.getRoles()).isEqualTo(customerEntity.getProfile().getRoles());
+    assertThat(customer.getActive()).isEqualTo(customerEntity.getCustomerData().getActive());
+    assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
+    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
+    assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -71,11 +71,11 @@ class CustomerServiceTest {
     final var customerEntity = Instancio.create(CustomerEntity.class);
     final var customerResponse = Instancio.of(CustomerResponse.class)
         .set(field(CustomerResponse::getId), customerEntity.getId())
-        .set(field(CustomerResponse::getFirstname), customerEntity.getProfile().getFirstname())
-        .set(field(CustomerResponse::getLastname), customerEntity.getProfile().getLastname())
-        .set(field(CustomerResponse::getActive), customerEntity.getProfile().getActive())
-        .set(field(CustomerResponse::getEmail), customerEntity.getProfile().getEmail())
-        .set(field(CustomerResponse::getRoles), customerEntity.getProfile().getRoles())
+        .set(field(CustomerResponse::getFirstname), customerEntity.getCustomerData().getFirstname())
+        .set(field(CustomerResponse::getLastname), customerEntity.getCustomerData().getLastname())
+        .set(field(CustomerResponse::getActive), customerEntity.getCustomerData().getActive())
+        .set(field(CustomerResponse::getEmail), customerEntity.getCustomerData().getEmail())
+        .set(field(CustomerResponse::getRoles), customerEntity.getCustomerData().getRoles())
         .create();
     given(customerMapper.toCustomerResponse(customerEntity)).willReturn(customerResponse);
     given(customerRepository.findAll()).willReturn(List.of(customerEntity));
@@ -84,11 +84,11 @@ class CustomerServiceTest {
 
     assertThat(customer).isNotEmpty();
     assertThat(customer.getFirst().getId()).isEqualTo(customerEntity.getId());
-    assertThat(customer.getFirst().getActive()).isEqualTo(customerEntity.getProfile().getActive());
-    assertThat(customer.getFirst().getLastname()).isEqualTo(customerEntity.getProfile().getLastname());
-    assertThat(customer.getFirst().getFirstname()).isEqualTo(customerEntity.getProfile().getFirstname());
-    assertThat(customer.getFirst().getEmail()).isEqualTo(customerEntity.getProfile().getEmail());
-    assertThat(customer.getFirst().getRoles()).isEqualTo(customerEntity.getProfile().getRoles());
+    assertThat(customer.getFirst().getActive()).isEqualTo(customerEntity.getCustomerData().getActive());
+    assertThat(customer.getFirst().getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
+    assertThat(customer.getFirst().getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
+    assertThat(customer.getFirst().getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
+    assertThat(customer.getFirst().getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -96,11 +96,11 @@ class CustomerServiceTest {
     final var customerEntity = Instancio.create(CustomerEntity.class);
     final var customerResponse = Instancio.of(CustomerResponse.class)
         .set(field(CustomerResponse::getId), customerEntity.getId())
-        .set(field(CustomerResponse::getFirstname), customerEntity.getProfile().getFirstname())
-        .set(field(CustomerResponse::getLastname), customerEntity.getProfile().getLastname())
-        .set(field(CustomerResponse::getActive), customerEntity.getProfile().getActive())
-        .set(field(CustomerResponse::getEmail), customerEntity.getProfile().getEmail())
-        .set(field(CustomerResponse::getRoles), customerEntity.getProfile().getRoles())
+        .set(field(CustomerResponse::getFirstname), customerEntity.getCustomerData().getFirstname())
+        .set(field(CustomerResponse::getLastname), customerEntity.getCustomerData().getLastname())
+        .set(field(CustomerResponse::getActive), customerEntity.getCustomerData().getActive())
+        .set(field(CustomerResponse::getEmail), customerEntity.getCustomerData().getEmail())
+        .set(field(CustomerResponse::getRoles), customerEntity.getCustomerData().getRoles())
         .create();
     given(customerMapper.toCustomerResponse(customerEntity)).willReturn(customerResponse);
     given(customerRepository.save(any())).willReturn(customerEntity);
@@ -108,11 +108,11 @@ class CustomerServiceTest {
     final var customer = customerService.createCustomer(CustomerRequest.builder().build());
 
     assertThat(customer.getId()).isEqualTo(customerEntity.getId());
-    assertThat(customer.getActive()).isEqualTo(customerEntity.getProfile().getActive());
-    assertThat(customer.getLastname()).isEqualTo(customerEntity.getProfile().getLastname());
-    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getProfile().getFirstname());
-    assertThat(customer.getEmail()).isEqualTo(customerEntity.getProfile().getEmail());
-    assertThat(customer.getRoles()).isEqualTo(customerEntity.getProfile().getRoles());
+    assertThat(customer.getActive()).isEqualTo(customerEntity.getCustomerData().getActive());
+    assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
+    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
+    assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -120,11 +120,11 @@ class CustomerServiceTest {
     final var customerEntity = Instancio.create(CustomerEntity.class);
     final var customerResponse = Instancio.of(CustomerResponse.class)
         .set(field(CustomerResponse::getId), customerEntity.getId())
-        .set(field(CustomerResponse::getFirstname), customerEntity.getProfile().getFirstname())
-        .set(field(CustomerResponse::getLastname), customerEntity.getProfile().getLastname())
-        .set(field(CustomerResponse::getActive), customerEntity.getProfile().getActive())
-        .set(field(CustomerResponse::getEmail), customerEntity.getProfile().getEmail())
-        .set(field(CustomerResponse::getRoles), customerEntity.getProfile().getRoles())
+        .set(field(CustomerResponse::getFirstname), customerEntity.getCustomerData().getFirstname())
+        .set(field(CustomerResponse::getLastname), customerEntity.getCustomerData().getLastname())
+        .set(field(CustomerResponse::getActive), customerEntity.getCustomerData().getActive())
+        .set(field(CustomerResponse::getEmail), customerEntity.getCustomerData().getEmail())
+        .set(field(CustomerResponse::getRoles), customerEntity.getCustomerData().getRoles())
         .create();
     given(customerMapper.toCustomerResponse(customerEntity)).willReturn(customerResponse);
     given(customerRepository.save(any())).willReturn(customerEntity);
@@ -132,11 +132,11 @@ class CustomerServiceTest {
     final var customer = customerService.updateCustomer(UUID.randomUUID(), CustomerRequest.builder().build());
 
     assertThat(customer.getId()).isEqualTo(customerEntity.getId());
-    assertThat(customer.getActive()).isEqualTo(customerEntity.getProfile().getActive());
-    assertThat(customer.getLastname()).isEqualTo(customerEntity.getProfile().getLastname());
-    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getProfile().getFirstname());
-    assertThat(customer.getEmail()).isEqualTo(customerEntity.getProfile().getEmail());
-    assertThat(customer.getRoles()).isEqualTo(customerEntity.getProfile().getRoles());
+    assertThat(customer.getActive()).isEqualTo(customerEntity.getCustomerData().getActive());
+    assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
+    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
+    assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test

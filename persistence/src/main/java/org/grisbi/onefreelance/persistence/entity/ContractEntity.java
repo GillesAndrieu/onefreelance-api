@@ -7,26 +7,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
+import java.util.Currency;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.grisbi.onefreelance.model.dto.Role;
-import org.grisbi.onefreelance.persistence.converter.CustomerDataConverter;
+import org.grisbi.onefreelance.model.dto.TaxRateType;
+import org.grisbi.onefreelance.persistence.converter.ContractDataConverter;
 import org.hibernate.annotations.ColumnTransformer;
 
 /**
- * Customer entity.
+ * Contract entity.
  */
-@Entity(name = "customer")
+@Entity(name = "contract")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEntity implements Serializable {
+public class ContractEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,26 +36,27 @@ public class CustomerEntity implements Serializable {
   @Column(updatable = false)
   private Instant createAt;
 
-  @Convert(converter = CustomerDataConverter.class)
+  @Convert(converter = ContractDataConverter.class)
   @ColumnTransformer(write = "?::jsonb")
   @Column(columnDefinition = "jsonb")
-  private CustomerDataEntity customerData;
+  private ContractDataEntity contractData;
 
   /**
-   * Profile entity.
+   * Data entity.
    */
   @Data
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
-  public static class CustomerDataEntity implements Serializable {
+  public static class ContractDataEntity implements Serializable {
 
-    private String firstname;
-    private String lastname;
-    private String email;
-    @Builder.Default
-    private List<Role> roles = List.of();
-    private Boolean active;
+    private UUID customerId;
+    private String name;
+    private String number;
+    private BigDecimal dailyRate;
+    private Currency currencyDailyRate;
+    private BigDecimal taxRate;
+    private TaxRateType taxRateType;
     @Builder.Default
     private Instant updateAt = Instant.now();
   }

@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.grisbi.onefreelance.api.controller.ControllerExceptionTranslator;
 import org.grisbi.onefreelance.api.controller.CustomerController;
 import org.grisbi.onefreelance.business.service.CustomerService;
+import org.grisbi.onefreelance.model.config.JacksonConfig;
 import org.grisbi.onefreelance.model.dto.request.CustomerRequest;
 import org.grisbi.onefreelance.model.dto.response.CustomerResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
@@ -34,7 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @EnableMethodSecurity
 @WithMockUser(roles = "ADMIN")
 @WebMvcTest(controllers = {CustomerController.class})
-@ContextConfiguration(classes = { CustomerController.class, ControllerExceptionTranslator.class })
+@ContextConfiguration(classes = { CustomerController.class, ControllerExceptionTranslator.class, JacksonConfig.class })
 class CustomerControllerTest {
 
   @MockitoBean
