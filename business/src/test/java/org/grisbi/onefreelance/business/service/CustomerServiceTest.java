@@ -56,7 +56,7 @@ class CustomerServiceTest {
     assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
     assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
-    assertThat(customer.getRoles().getFirst()).isEqualTo(customerEntity.getCustomerData().getRoles().getFirst().roleName);
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -89,7 +89,7 @@ class CustomerServiceTest {
     assertThat(customer.getFirst().getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
     assertThat(customer.getFirst().getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getFirst().getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
-    assertThat(customer.getFirst().getRoles().getFirst()).isEqualTo(customerEntity.getCustomerData().getRoles().getFirst().roleName);
+    assertThat(customer.getFirst().getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -113,7 +113,7 @@ class CustomerServiceTest {
     assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
     assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
-    assertThat(customer.getRoles().getFirst()).isEqualTo(customerEntity.getCustomerData().getRoles().getFirst().roleName);
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
@@ -137,7 +137,7 @@ class CustomerServiceTest {
     assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
     assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
-    assertThat(customer.getRoles().getFirst()).isEqualTo(customerEntity.getCustomerData().getRoles().getFirst().roleName);
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
 
     verify(customerRepository, times(0)).save(any());
   }
@@ -163,7 +163,7 @@ class CustomerServiceTest {
     assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
     assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
-    assertThat(customer.getRoles().getFirst()).isEqualTo(customerEntity.getCustomerData().getRoles().getFirst().roleName);
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
   }
 
   @Test
