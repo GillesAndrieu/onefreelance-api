@@ -1,5 +1,6 @@
 package org.grisbi.onefreelance.model.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 import lombok.Builder;
@@ -15,10 +16,16 @@ import org.grisbi.onefreelance.model.dto.TaxRateType;
 @Jacksonized
 public class ContractRequest {
 
+  @NotNull
   String name;
+  @NotNull
   String number;
+  @NotNull
   BigDecimal dailyRate;
+  @NotNull
   Currency currencyDailyRate;
+  @NotNull
   BigDecimal taxRate;
-  TaxRateType taxRateType;
+  @Builder.Default
+  TaxRateType taxRateType = TaxRateType.NONE;
 }

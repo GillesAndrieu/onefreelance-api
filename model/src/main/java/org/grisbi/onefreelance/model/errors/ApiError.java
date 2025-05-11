@@ -7,6 +7,7 @@ import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
+import org.springframework.http.HttpStatus;
 
 /**
  * Define the ApiError returned by controller.
@@ -21,10 +22,10 @@ public class ApiError {
   @Default
   Instant timestamp = Instant.now();
 
-  @Schema(description = "The error code to interpret.", example = "AUTHORIZE_NOT_ALLOWED")
+  @Schema(description = "The error code to interpret.", example = "NOT_FOUND")
   ErrorHandler error;
   @Schema(description = "The message explaining the cause of the error.",
-      example = "Authorize action not callable, it can only be impersonated through status or verify action.")
+      example = "The email can't be null")
   String errorDescription;
 
   @Schema(description = "The HTTP status returned by this HTTP response.", example = "409")
@@ -41,6 +42,20 @@ public class ApiError {
         .error(e.getErrorHandler())
         .errorDescription(e.getMessage())
         .status(e.getErrorHandler().getStatus().value())
+        .build();
+  }
+
+  /**
+   * Generic Error handler.
+   *
+   * @param e error
+   * @return ApiError
+   */
+  public static ApiError forException(Throwable e) {
+    return ApiError.builder()
+        .error(ErrorHandler.NOT_FOUND)
+        .errorDescription(e.getMessage())
+        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
         .build();
   }
 
