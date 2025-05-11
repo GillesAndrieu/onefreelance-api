@@ -2,6 +2,7 @@ package org.grisbi.onefreelance.business.service;
 
 import io.vavr.control.Try;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +57,14 @@ public class CustomerService {
    * @return customer response
    */
   public CustomerResponse createCustomer(final CustomerRequest customerRequest) {
-    final CustomerEntity customerEntity = customerRepository
-        .save(customerMapper.toCreateCustomerEntity(customerRequest));
-    return customerMapper.toCustomerResponse(customerEntity);
+    final Optional<CustomerEntity> customer = customerRepository.findByProfileEmail(customerRequest.getEmail());
+    if (customer.isPresent()) {
+      return customerMapper.toCustomerResponse(customer.get());
+    } else {
+      final CustomerEntity customerEntity = customerRepository
+          .save(customerMapper.toCreateCustomerEntity(customerRequest));
+      return customerMapper.toCustomerResponse(customerEntity);
+    }
   }
 
   /**

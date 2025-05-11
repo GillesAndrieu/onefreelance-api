@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
@@ -113,6 +114,32 @@ class CustomerServiceTest {
     assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
     assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
     assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
+  }
+
+  @Test
+  void given_CustomerRequest_with_customer_exist_when_call_createCustomer_then_return_customerResponse_without_save() {
+    final var customerEntity = Instancio.create(CustomerEntity.class);
+    final var customerResponse = Instancio.of(CustomerResponse.class)
+        .set(field(CustomerResponse::getId), customerEntity.getId())
+        .set(field(CustomerResponse::getFirstname), customerEntity.getCustomerData().getFirstname())
+        .set(field(CustomerResponse::getLastname), customerEntity.getCustomerData().getLastname())
+        .set(field(CustomerResponse::getActive), customerEntity.getCustomerData().getActive())
+        .set(field(CustomerResponse::getEmail), customerEntity.getCustomerData().getEmail())
+        .set(field(CustomerResponse::getRoles), customerEntity.getCustomerData().getRoles())
+        .create();
+    given(customerMapper.toCustomerResponse(customerEntity)).willReturn(customerResponse);
+    given(customerRepository.findByProfileEmail(any())).willReturn(Optional.of(customerEntity));
+
+    final var customer = customerService.createCustomer(CustomerRequest.builder().build());
+
+    assertThat(customer.getId()).isEqualTo(customerEntity.getId());
+    assertThat(customer.getActive()).isEqualTo(customerEntity.getCustomerData().getActive());
+    assertThat(customer.getLastname()).isEqualTo(customerEntity.getCustomerData().getLastname());
+    assertThat(customer.getFirstname()).isEqualTo(customerEntity.getCustomerData().getFirstname());
+    assertThat(customer.getEmail()).isEqualTo(customerEntity.getCustomerData().getEmail());
+    assertThat(customer.getRoles()).isEqualTo(customerEntity.getCustomerData().getRoles());
+
+    verify(customerRepository, times(0)).save(any());
   }
 
   @Test
