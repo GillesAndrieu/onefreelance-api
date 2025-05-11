@@ -2,10 +2,12 @@ package org.grisbi.onefreelance.business.service;
 
 import io.vavr.control.Try;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grisbi.onefreelance.business.mappers.ClientMapper;
+import org.grisbi.onefreelance.business.utils.UserUtils;
 import org.grisbi.onefreelance.model.dto.request.ClientRequest;
 import org.grisbi.onefreelance.model.dto.response.ClientResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ClientService {
 
+  private static final String CLIENT_NOT_FOUNT = "Client Not Found";
   private final ClientRepository clientRepository;
   private final ClientMapper clientMapper;
 
@@ -33,7 +36,7 @@ public class ClientService {
    */
   public ClientResponse getClient(final UUID id) {
     final ClientEntity clientEntity = clientRepository.findById(id)
-        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found"));
+        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
     return clientMapper.toClientResponse(clientEntity);
   }
 
@@ -43,10 +46,11 @@ public class ClientService {
    * @return client response
    */
   public List<ClientResponse> getAllClients() {
-    return clientRepository.findAll()
-        .stream()
-        .map(clientMapper::toClientResponse)
-        .toList();
+    return clientRepository.findAllByClientDataAndId(UserUtils.getConnectedUser().toString())
+        .map(client -> client.stream()
+            .map(clientMapper::toClientResponse)
+            .toList())
+        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
   }
 
   /**
@@ -57,7 +61,7 @@ public class ClientService {
    */
   public ClientResponse createClient(final ClientRequest clientRequest) {
     final ClientEntity clientEntity = clientRepository
-        .save(clientMapper.toCreateClientEntity(clientRequest));
+        .save(clientMapper.toCreateClientEntity(clientRequest, UserUtils.getConnectedUser()));
     return clientMapper.toClientResponse(clientEntity);
   }
 
@@ -69,10 +73,18 @@ public class ClientService {
    * @return client response
    */
   public ClientResponse updateClient(final UUID id, final ClientRequest clientRequest) {
-    final ClientEntity clientEntity = Try.of(() -> clientRepository
-            .save(clientMapper.toUpdateClientEntity(id, clientRequest)))
-        .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found"));
-    return clientMapper.toClientResponse(clientEntity);
+    final UUID connectedUser = UserUtils.getConnectedUser();
+    final Optional<ClientEntity> client = clientRepository.findByIdAndCustomerId(id,
+        UserUtils.getConnectedUser().toString());
+
+    if (client.isPresent()) {
+      final ClientEntity clientEntity = Try.of(() -> clientRepository
+              .save(clientMapper.toUpdateClientEntity(id, clientRequest, connectedUser)))
+          .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
+      return clientMapper.toClientResponse(clientEntity);
+    } else {
+      throw BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT);
+    }
   }
 
   /**
@@ -81,6 +93,12 @@ public class ClientService {
    * @param id of client
    */
   public void deleteClient(final UUID id) {
-    clientRepository.deleteById(id);
+    final Optional<ClientEntity> clientEntity = clientRepository.findByIdAndCustomerId(id,
+        UserUtils.getConnectedUser().toString());
+    if (clientEntity.isPresent()) {
+      clientRepository.deleteById(id);
+    } else {
+      throw BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT);
+    }
   }
 }

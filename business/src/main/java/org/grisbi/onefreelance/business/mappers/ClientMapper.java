@@ -19,17 +19,18 @@ public interface ClientMapper {
   /*---------------------------*/
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createAt", expression = "java(Instant.now())")
-  @Mapping(target = "clientData", source = "clientRequest")
-  ClientEntity toCreateClientEntity(final ClientRequest clientRequest);
+  @Mapping(target = "clientData", expression = "java(toClientDataEntity(clientRequest, connectedUser))")
+  ClientEntity toCreateClientEntity(final ClientRequest clientRequest, final UUID connectedUser);
 
   @Mapping(target = "id", source = "id")
   @Mapping(target = "createAt", ignore = true)
-  @Mapping(target = "clientData", source = "clientRequest")
-  ClientEntity toUpdateClientEntity(final UUID id, final ClientRequest clientRequest);
+  @Mapping(target = "clientData", expression = "java(toClientDataEntity(clientRequest, connectedUser))")
+  ClientEntity toUpdateClientEntity(final UUID id, final ClientRequest clientRequest, final UUID connectedUser);
 
   /*---------------------------*/
   /* Client RESPONSE           */
   /*---------------------------*/
+
   @Mapping(target = "id", source = "clientEntity.id")
   @Mapping(target = "name", source = "clientEntity.clientData.name")
   @Mapping(target = "address", source = "clientEntity.clientData.address")
@@ -41,11 +42,12 @@ public interface ClientMapper {
   /*---------------------------*/
   /* Client data Entity        */
   /*---------------------------*/
-  @Mapping(target = "customerId", ignore = true)
+
+  @Mapping(target = "customerId", source = "connectedUser")
   @Mapping(target = "name", source = "clientRequest.name")
   @Mapping(target = "address", source = "clientRequest.address")
   @Mapping(target = "siret", source = "clientRequest.siret")
   @Mapping(target = "referent", source = "clientRequest.referent")
   @Mapping(target = "updateAt", ignore = true)
-  ClientDataEntity toClientDataEntity(final ClientRequest clientRequest);
+  ClientDataEntity toClientDataEntity(final ClientRequest clientRequest, final UUID connectedUser);
 }
