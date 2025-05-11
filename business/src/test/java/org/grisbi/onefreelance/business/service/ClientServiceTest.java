@@ -159,13 +159,13 @@ class ClientServiceTest {
 
   @Test
   void given_fak_client_id_when_call_deleteClient_then_return_error() {
-    final var clientEntity = Instancio.create(ClientEntity.class);
-    createSecurityContext(clientEntity.getId());
+    final UUID clientId = UUID.randomUUID();
+    createSecurityContext(clientId);
 
     given(clientRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
 
     assertThrows(BusinessError.class,
-        () -> clientService.deleteClient(UUID.randomUUID()));
+        () -> clientService.deleteClient(clientId));
 
     verify(clientRepository, times(0)).deleteById(any());
   }
