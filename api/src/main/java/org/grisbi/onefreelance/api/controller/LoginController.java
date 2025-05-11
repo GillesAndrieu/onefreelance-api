@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Get login information.
+ */
 @RestController
 @RequestMapping("/v1/login")
 @RequiredArgsConstructor
@@ -22,6 +25,12 @@ public class LoginController {
 
   private final LoginService loginService;
 
+  /**
+   * Get login information .
+   *
+   * @param authentication of customer
+   * @return LoginResponse
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<LoginResponse> getLogin(final Authentication authentication) {
     final JwtUserDetails user = (JwtUserDetails) authentication.getPrincipal();
