@@ -1,5 +1,6 @@
 package org.grisbi.onefreelance.controller;
 
+import static org.instancio.Select.field;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -125,7 +126,9 @@ class CustomerControllerTest {
 
   @Test
   void given_customer_request_when_call_postCustomer_then_return_201_and_CustomerResponse() throws Exception {
-    final var customerRequest = Instancio.create(CustomerRequest.class);
+    final var customerRequest = Instancio.of(CustomerRequest.class)
+        .set(field(CustomerRequest::getEmail), "john.doe@gmail.com")
+        .create();
     final var customer = Instancio.create(CustomerResponse.class);
     given(customerService.createCustomer(any())).willReturn(customer);
 
@@ -174,7 +177,9 @@ class CustomerControllerTest {
 
   @Test
   void given_CustomerRequest_when_call_patchCustomer_then_return_200_and_CustomerResponse() throws Exception {
-    final var customerRequest = Instancio.create(CustomerRequest.class);
+    final var customerRequest = Instancio.of(CustomerRequest.class)
+        .set(field(CustomerRequest::getEmail), "john.doe@gmail.com")
+        .create();
     final var customer = Instancio.create(CustomerResponse.class);
     given(customerService.updateCustomer(any(), any())).willReturn(customer);
 
@@ -199,7 +204,9 @@ class CustomerControllerTest {
 
   @Test
   void given_customer_not_found_when_call_patchCustomer_then_return_404() throws Exception {
-    final var customerRequest = Instancio.create(CustomerRequest.class);
+    final var customerRequest = Instancio.of(CustomerRequest.class)
+        .set(field(CustomerRequest::getEmail), "john.doe@gmail.com")
+        .create();
     final var customer = Instancio.create(CustomerResponse.class);
     given(customerService.updateCustomer(any(), any())).willThrow(BusinessError.forError(ErrorHandler.NOT_FOUND));
 
