@@ -38,7 +38,7 @@ class LoginControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  void given_customer_id_when_call_getCustomer_then_return_200_and_CustomerResponse() throws Exception {
+  void given_jwt_when_call_getLogin_then_return_200_and_LoginResponse() throws Exception {
     final var authentication = new UsernamePasswordAuthenticationToken(new JwtUserDetails(UUID.randomUUID(),
         "username", List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))), "password",
         List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
