@@ -20,6 +20,13 @@ public class LoginService {
 
   private final LoginMapper loginMapper;
 
+  /**
+   * Get the login roles.
+   *
+   * @param id          of customer
+   * @param authorities of customer
+   * @return LoginResponse
+   */
   public LoginResponse getLoginRoles(final UUID id, Collection<? extends GrantedAuthority> authorities) {
     final List<String> roles = authorities.stream()
         .map(GrantedAuthority::getAuthority)
