@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ClientService {
 
+  private static final String CLIENT_NOT_FOUNT = "Client Not Found";
   private final ClientRepository clientRepository;
   private final ClientMapper clientMapper;
 
@@ -35,7 +36,7 @@ public class ClientService {
    */
   public ClientResponse getClient(final UUID id) {
     final ClientEntity clientEntity = clientRepository.findById(id)
-        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found"));
+        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
     return clientMapper.toClientResponse(clientEntity);
   }
 
@@ -49,7 +50,7 @@ public class ClientService {
         .map(client -> client.stream()
             .map(clientMapper::toClientResponse)
             .toList())
-        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found"));
+        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
   }
 
   /**
@@ -79,10 +80,10 @@ public class ClientService {
     if (client.isPresent()) {
       final ClientEntity clientEntity = Try.of(() -> clientRepository
               .save(clientMapper.toUpdateClientEntity(id, clientRequest, connectedUser)))
-          .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found"));
+          .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
       return clientMapper.toClientResponse(clientEntity);
     } else {
-      throw BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found");
+      throw BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT);
     }
   }
 
@@ -97,7 +98,7 @@ public class ClientService {
     if (clientEntity.isPresent()) {
       clientRepository.deleteById(id);
     } else {
-      throw BusinessError.forError(ErrorHandler.NOT_FOUND, "Client Not Found");
+      throw BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT);
     }
   }
 }

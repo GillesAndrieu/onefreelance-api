@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
@@ -154,6 +155,19 @@ class ClientServiceTest {
 
     clientService.deleteClient(UUID.randomUUID());
     verify(clientRepository).deleteById(any());
+  }
+
+  @Test
+  void given_fak_client_id_when_call_deleteClient_then_return_error() {
+    final var clientEntity = Instancio.create(ClientEntity.class);
+    createSecurityContext(clientEntity.getId());
+
+    given(clientRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
+
+    assertThrows(BusinessError.class,
+        () -> clientService.deleteClient(UUID.randomUUID()));
+
+    verify(clientRepository, times(0)).deleteById(any());
   }
 
   private void createSecurityContext(UUID id) {
