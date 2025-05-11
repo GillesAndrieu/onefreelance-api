@@ -8,7 +8,7 @@ repositories {
 
 // PLUGIN VERSION
 def spring_dependency_management_plugin = "1.1.7"
-def spring_boot_plugin = "3.4.2"
+def spring_boot_plugin = "3.4.5"
 def sonar_qube_plugin = "6.0.1.5171"
 
 dependencies {
