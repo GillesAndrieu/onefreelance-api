@@ -48,8 +48,10 @@ class ClientServiceTest {
         .set(field(ClientResponse::getSiret), clientEntity.getClientData().getSiret())
         .set(field(ClientResponse::getReferent), clientEntity.getClientData().getReferent())
         .create();
+    createSecurityContext(clientEntity.getId());
+
     given(clientmapper.toClientResponse(clientEntity)).willReturn(clientResponse);
-    given(clientRepository.findById(any())).willReturn(Optional.of(clientEntity));
+    given(clientRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(clientEntity));
 
     final var client = clientService.getClient(UUID.randomUUID());
 
@@ -62,7 +64,9 @@ class ClientServiceTest {
   @Test
   void given_client_id_not_found_when_call_getClient_then_return_BusinessError() {
     final var id = UUID.randomUUID();
-    given(clientRepository.findById(any())).willReturn(Optional.empty());
+
+    createSecurityContext(id);
+    given(clientRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
 
     assertThrows(BusinessError.class, () -> clientService.getClient(id));
   }
@@ -158,7 +162,7 @@ class ClientServiceTest {
   }
 
   @Test
-  void given_fak_client_id_when_call_deleteClient_then_return_error() {
+  void given_fake_client_id_when_call_deleteClient_then_return_error() {
     final UUID clientId = UUID.randomUUID();
     createSecurityContext(clientId);
 

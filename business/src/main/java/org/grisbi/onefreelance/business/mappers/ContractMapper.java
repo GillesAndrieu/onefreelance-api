@@ -19,13 +19,13 @@ public interface ContractMapper {
   /*---------------------------*/
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createAt", expression = "java(Instant.now())")
-  @Mapping(target = "contractData", source = "contractRequest")
-  ContractEntity toCreateContractEntity(final ContractRequest contractRequest);
+  @Mapping(target = "contractData", expression = "java(toContractDataEntity(contractRequest, connectedId))")
+  ContractEntity toCreateContractEntity(final ContractRequest contractRequest, final UUID connectedId);
 
   @Mapping(target = "id", source = "id")
   @Mapping(target = "createAt", ignore = true)
-  @Mapping(target = "contractData", source = "contractRequest")
-  ContractEntity toUpdateContractEntity(final UUID id, final ContractRequest contractRequest);
+  @Mapping(target = "contractData", expression = "java(toContractDataEntity(contractRequest, connectedId))")
+  ContractEntity toUpdateContractEntity(final UUID id, final ContractRequest contractRequest, final UUID connectedId);
 
   /*---------------------------*/
   /* Contract RESPONSE         */
@@ -43,7 +43,7 @@ public interface ContractMapper {
   /*---------------------------*/
   /* Contract data Entity      */
   /*---------------------------*/
-  @Mapping(target = "customerId", ignore = true)
+  @Mapping(target = "customerId", source = "connectedId")
   @Mapping(target = "name", source = "contractRequest.name")
   @Mapping(target = "number", source = "contractRequest.number")
   @Mapping(target = "dailyRate", source = "contractRequest.dailyRate")
@@ -51,5 +51,5 @@ public interface ContractMapper {
   @Mapping(target = "taxRate", source = "contractRequest.taxRate")
   @Mapping(target = "taxRateType", source = "contractRequest.taxRateType")
   @Mapping(target = "updateAt", ignore = true)
-  ContractDataEntity toContractDataEntity(final ContractRequest contractRequest);
+  ContractDataEntity toContractDataEntity(final ContractRequest contractRequest, final UUID connectedId);
 }

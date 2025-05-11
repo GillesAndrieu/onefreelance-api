@@ -35,7 +35,8 @@ public class ClientService {
    * @return client response
    */
   public ClientResponse getClient(final UUID id) {
-    final ClientEntity clientEntity = clientRepository.findById(id)
+    final UUID connectedUser = UserUtils.getConnectedUser();
+    final ClientEntity clientEntity = clientRepository.findByIdAndCustomerId(id, connectedUser.toString())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CLIENT_NOT_FOUNT));
     return clientMapper.toClientResponse(clientEntity);
   }
@@ -74,8 +75,7 @@ public class ClientService {
    */
   public ClientResponse updateClient(final UUID id, final ClientRequest clientRequest) {
     final UUID connectedUser = UserUtils.getConnectedUser();
-    final Optional<ClientEntity> client = clientRepository.findByIdAndCustomerId(id,
-        UserUtils.getConnectedUser().toString());
+    final Optional<ClientEntity> client = clientRepository.findByIdAndCustomerId(id, connectedUser.toString());
 
     if (client.isPresent()) {
       final ClientEntity clientEntity = Try.of(() -> clientRepository
