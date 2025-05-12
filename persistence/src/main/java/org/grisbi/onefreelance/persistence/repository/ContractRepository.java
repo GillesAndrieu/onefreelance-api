@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, UUID> {
 
-  @Query(value = "SELECT c.id, c.contracct_data, c.create_at FROM contract c "
+  @Query(value = "SELECT c.id, c.contract_data, c.create_at FROM contract c "
       + "WHERE contract_data ->> 'customer_id' = :id",
       nativeQuery = true)
   Optional<List<ContractEntity>> findAllByContractDataAndId(@Param("id") String id);

@@ -80,7 +80,7 @@ public class ContractService {
     if (contract.isPresent()) {
       final ContractEntity contractEntity = Try.of(() -> contractRepository
               .save(contractMapper.toUpdateContractEntity(id, contractRequest, connectedUser)))
-          .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, "Contract Not Found"));
+          .getOrElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT));
       return contractMapper.toContractResponse(contractEntity);
     } else {
       throw BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT);
