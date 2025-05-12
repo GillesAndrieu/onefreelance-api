@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
@@ -17,12 +18,16 @@ import org.grisbi.onefreelance.model.dto.response.ContractResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.repository.ContractRepository;
+import org.grisbi.onefreelance.security.dto.JwtUserDetails;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ExtendWith(MockitoExtension.class)
 class ContractServiceTest {
@@ -46,8 +51,10 @@ class ContractServiceTest {
         .set(field(ContractResponse::getTaxRate), contractEntity.getContractData().getTaxRate())
         .set(field(ContractResponse::getTaxRateType), contractEntity.getContractData().getTaxRateType())
         .create();
+    createSecurityContext(contractEntity.getId());
+
     given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
-    given(contractRepository.findById(any())).willReturn(Optional.of(contractEntity));
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
 
     final var contract = contractService.getContract(UUID.randomUUID());
 
@@ -63,7 +70,9 @@ class ContractServiceTest {
   @Test
   void given_contract_id_not_found_when_call_getContract_then_return_BusinessError() {
     final var id = UUID.randomUUID();
-    given(contractRepository.findById(any())).willReturn(Optional.empty());
+    createSecurityContext(id);
+
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
 
     assertThrows(BusinessError.class, () -> contractService.getContract(id));
   }
@@ -80,8 +89,9 @@ class ContractServiceTest {
         .set(field(ContractResponse::getTaxRate), contractEntity.getContractData().getTaxRate())
         .set(field(ContractResponse::getTaxRateType), contractEntity.getContractData().getTaxRateType())
         .create();
+
     given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
-    given(contractRepository.findAll()).willReturn(List.of(contractEntity));
+    given(contractRepository.findAllByContractDataAndId(any())).willReturn(Optional.of(List.of(contractEntity)));
 
     final var contract = contractService.getAllContracts();
 
@@ -133,7 +143,10 @@ class ContractServiceTest {
         .set(field(ContractResponse::getTaxRate), contractEntity.getContractData().getTaxRate())
         .set(field(ContractResponse::getTaxRateType), contractEntity.getContractData().getTaxRateType())
         .create();
+    createSecurityContext(contractEntity.getId());
+
     given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     given(contractRepository.save(any())).willReturn(contractEntity);
 
     final var contract = contractService.updateContract(UUID.randomUUID(), ContractRequest.builder().build());
@@ -151,7 +164,9 @@ class ContractServiceTest {
   void given_ContractRequest_and_contract_not_found_when_call_updateContract_then_return_BusinessError() {
     final var id = UUID.randomUUID();
     final var contractRequest = Instancio.create(ContractRequest.class);
-    given(contractRepository.save(any())).willThrow(new RuntimeException());
+    createSecurityContext(UUID.randomUUID());
+
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
 
     assertThrows(BusinessError.class,
         () -> contractService.updateContract(id, contractRequest));
@@ -159,10 +174,34 @@ class ContractServiceTest {
 
   @Test
   void given_contract_id_when_call_deleteContract_then_ok() {
+    final var contractEntity = Instancio.create(ContractEntity.class);
+    createSecurityContext(UUID.randomUUID());
+
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     doNothing().when(contractRepository).deleteById(any());
 
     contractService.deleteContract(UUID.randomUUID());
     verify(contractRepository).deleteById(any());
+  }
+
+  @Test
+  void given_fake_contract_id_when_call_deleteContract_then_return_error() {
+    final UUID clientId = UUID.randomUUID();
+    createSecurityContext(clientId);
+
+    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
+
+    assertThrows(BusinessError.class,
+        () -> contractService.deleteContract(clientId));
+
+    verify(contractRepository, times(0)).deleteById(any());
+  }
+
+  private void createSecurityContext(UUID id) {
+    SecurityContextHolder.createEmptyContext();
+    SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken("user",
+        new JwtUserDetails(id, "username", List.of(new SimpleGrantedAuthority("ROLE_USER"))),
+        List.of(new SimpleGrantedAuthority("ROLE_USER"))));
   }
 
 }
