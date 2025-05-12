@@ -13,10 +13,10 @@ CREATE INDEX CONCURRENTLY idx_contract_customer_id ON onefreelance.contract((con
 /**
   * Report
  */
-CREATE INDEX CONCURRENTLY idx_report_customer_id ON onefreelance.report((contract_data->>'customer_id'));
-CREATE INDEX CONCURRENTLY idx_report_year ON onefreelance.report((contract_data->>'year'));
-CREATE INDEX CONCURRENTLY idx_report_month ON onefreelance.report((contract_data->>'month'));
+CREATE INDEX CONCURRENTLY idx_report_customer_id ON onefreelance.report((report_data->>'customer_id'));
+CREATE INDEX CONCURRENTLY idx_report_year ON onefreelance.report((report_data->>'year'));
+CREATE INDEX CONCURRENTLY idx_report_month ON onefreelance.report((report_data->>'month'));
 /**
   * Notify
  */
-CREATE INDEX CONCURRENTLY idx_notify_customer_id ON onefreelance.notify((contract_data->>'customer_id'));
+CREATE INDEX CONCURRENTLY idx_notify_customer_id ON onefreelance.notify((notify_data->>'customer_id'));
