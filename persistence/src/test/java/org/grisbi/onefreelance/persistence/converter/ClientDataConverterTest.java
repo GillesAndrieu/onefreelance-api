@@ -33,7 +33,7 @@ class ClientDataConverterTest {
   private ClientDataConverter clientConverter;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.clientConverter = new ClientDataConverter(objectMapper);
   }
 

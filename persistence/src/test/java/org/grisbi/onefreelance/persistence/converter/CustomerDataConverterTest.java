@@ -33,7 +33,7 @@ class CustomerDataConverterTest {
   private CustomerDataConverter profileConverter;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.profileConverter = new CustomerDataConverter(objectMapper);
   }
 

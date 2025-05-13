@@ -33,7 +33,7 @@ class ReportDataConverterTest {
   private ReportDataConverter reportConverter;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.reportConverter = new ReportDataConverter(objectMapper);
   }
 
