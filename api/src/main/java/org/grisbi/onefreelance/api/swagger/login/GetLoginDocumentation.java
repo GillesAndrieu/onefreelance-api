@@ -1,4 +1,4 @@
-package org.grisbi.onefreelance.api.swagger.client;
+package org.grisbi.onefreelance.api.swagger.login;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,35 +9,28 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.grisbi.onefreelance.model.dto.response.ClientResponse;
+import org.grisbi.onefreelance.model.dto.response.LoginResponse;
 import org.grisbi.onefreelance.model.errors.ApiError;
 
 /**
- * Swagger : PostClientDocumentation.
+ * Swagger : GetLoginDocumentation.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "Post a new client",
-    description = "Create a new client.",
+@Operation(summary = "Get login information",
+    description = "Get login information.",
     security = {@SecurityRequirement(name = "jwt")},
     responses = {
         @ApiResponse(
-            responseCode = "201",
-            description = "The client content",
+            responseCode = "200",
+            description = "The login content",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(
-                    implementation = ClientResponse.class))),
+                    implementation = LoginResponse.class))),
         @ApiResponse(
-            responseCode = "400",
-            description = "The provided body is not correct",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(
-                    implementation = ApiError.class))),
-        @ApiResponse(
-            responseCode = "409",
-            description = "A client already exists",
+            responseCode = "404",
+            description = "A profile does not exist",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(
@@ -50,6 +43,6 @@ import org.grisbi.onefreelance.model.errors.ApiError;
                 schema = @Schema(
                     implementation = ApiError.class))),
     })
-public @interface PostClientDocumentation {
+public @interface GetLoginDocumentation {
 }
 

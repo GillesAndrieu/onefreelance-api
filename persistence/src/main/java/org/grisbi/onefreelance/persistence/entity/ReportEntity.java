@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.grisbi.onefreelance.model.dto.Calculated;
 import org.grisbi.onefreelance.persistence.converter.ReportDataConverter;
 import org.hibernate.annotations.ColumnTransformer;
 
@@ -56,14 +57,10 @@ public class ReportEntity implements Serializable {
     private Integer year;
     private Integer billedMonth;
     private Integer billedYear;
-    private Map<Integer, BigDecimal> activity;
+    private Boolean billed;
+    private Map<String, BigDecimal> activity;
     private BigDecimal bonus;
-    private BigDecimal totalDay;
-    private BigDecimal total;
-    private BigDecimal totalTaxExcluded;
-    private BigDecimal totalTaxIncluded;
-    private BigDecimal vat;
-    private BigDecimal estimateTax;
+    private Calculated calculated;
     @Builder.Default
     private Instant updateAt = Instant.now();
   }

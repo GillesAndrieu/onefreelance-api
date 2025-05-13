@@ -2,6 +2,7 @@ package org.grisbi.onefreelance.api.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.grisbi.onefreelance.api.swagger.login.GetLoginDocumentation;
 import org.grisbi.onefreelance.business.service.LoginService;
 import org.grisbi.onefreelance.model.dto.response.LoginResponse;
 import org.grisbi.onefreelance.security.dto.JwtUserDetails;
@@ -31,6 +32,7 @@ public class LoginController {
    * @param authentication of customer
    * @return LoginResponse
    */
+  @GetLoginDocumentation
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<LoginResponse> getLogin(final Authentication authentication) {
     final JwtUserDetails user = (JwtUserDetails) authentication.getPrincipal();

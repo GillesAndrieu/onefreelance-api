@@ -27,5 +27,5 @@ public class ContractRequest {
   @NotNull
   BigDecimal taxRate;
   @Builder.Default
-  TaxRateType taxRateType = TaxRateType.NONE;
+  TaxRateType taxRateType = TaxRateType.CURRENCY;
 }
