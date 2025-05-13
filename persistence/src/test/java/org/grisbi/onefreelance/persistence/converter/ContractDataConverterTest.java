@@ -33,7 +33,7 @@ class ContractDataConverterTest {
   private ContractDataConverter contractConverter;
 
   @BeforeEach
-  public void init() {
+  void init() {
     this.contractConverter = new ContractDataConverter(objectMapper);
   }
 
