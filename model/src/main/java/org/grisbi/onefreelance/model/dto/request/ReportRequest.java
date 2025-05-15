@@ -28,10 +28,8 @@ public class ReportRequest {
   @NotNull
   @Positive
   Integer year;
-  @NotNull
   @Positive
   Integer billedMonth;
-  @NotNull
   @Positive
   Integer billedYear;
   @Builder.Default
