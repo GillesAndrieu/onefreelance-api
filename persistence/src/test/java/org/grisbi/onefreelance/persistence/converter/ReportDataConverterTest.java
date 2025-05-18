@@ -44,7 +44,7 @@ class ReportDataConverterTest {
     final var converterResult = reportConverter.convertToDatabaseColumn(reportEntity);
 
     assertThat(converterResult).isNotNull()
-        .containsAnyOf(reportEntity.getCustomerId().toString(), reportEntity.getClientId().toString(), reportEntity.getContractId().toString());
+        .containsAnyOf(reportEntity.getCustomerId().toString(), reportEntity.getCustomerId().toString(), reportEntity.getContractId().toString());
   }
 
   @Test

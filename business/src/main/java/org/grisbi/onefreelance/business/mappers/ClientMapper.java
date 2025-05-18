@@ -7,12 +7,15 @@ import org.grisbi.onefreelance.persistence.entity.ClientEntity;
 import org.grisbi.onefreelance.persistence.entity.ClientEntity.ClientDataEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * Client mapper.
  */
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
+
+  ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
 
   /*---------------------------*/
   /* Client Entity             */
@@ -38,6 +41,15 @@ public interface ClientMapper {
   @Mapping(target = "referent", source = "clientEntity.clientData.referent")
   @Mapping(target = "updateAt", source = "clientEntity.clientData.updateAt")
   ClientResponse toClientResponse(final ClientEntity clientEntity);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "name", source = "clientEntity.name")
+  @Mapping(target = "address", source = "clientEntity.address")
+  @Mapping(target = "siret", source = "clientEntity.siret")
+  @Mapping(target = "referent", source = "clientEntity.referent")
+  @Mapping(target = "updateAt", source = "clientEntity.updateAt")
+  @Mapping(target = "createAt", ignore = true)
+  ClientResponse toClientResponse(final ClientDataEntity clientEntity);
 
   /*---------------------------*/
   /* Client data Entity        */

@@ -53,7 +53,7 @@ class ContractServiceTest {
         .create();
     createSecurityContext(contractEntity.getId());
 
-    given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
+    given(contractMapper.toContractJoinClientResponse(contractEntity)).willReturn(contractResponse);
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
 
     final var contract = contractService.getContract(UUID.randomUUID());
@@ -90,8 +90,8 @@ class ContractServiceTest {
         .set(field(ContractResponse::getTaxRateType), contractEntity.getContractData().getTaxRateType())
         .create();
 
-    given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
-    given(contractRepository.findAllByContractDataAndId(any())).willReturn(Optional.of(List.of(contractEntity)));
+    given(contractMapper.toContractJoinClientResponse(contractEntity)).willReturn(contractResponse);
+    given(contractRepository.findAllDataById(any())).willReturn(Optional.of(List.of(contractEntity)));
 
     final var contract = contractService.getAllContracts();
 

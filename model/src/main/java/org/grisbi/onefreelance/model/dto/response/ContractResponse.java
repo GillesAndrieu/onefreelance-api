@@ -18,6 +18,8 @@ import org.grisbi.onefreelance.model.dto.TaxRateType;
 public class ContractResponse {
 
   UUID id;
+  UUID clientId;
+  ClientResponse client;
   String name;
   String number;
   BigDecimal dailyRate;

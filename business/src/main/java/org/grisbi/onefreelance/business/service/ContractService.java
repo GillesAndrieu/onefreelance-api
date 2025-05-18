@@ -36,9 +36,10 @@ public class ContractService {
    */
   public ContractResponse getContract(final UUID id) {
     final UUID connectedUser = UserUtils.getConnectedUser();
-    final ContractEntity contractEntity = contractRepository.findByIdAndCustomerId(id, connectedUser.toString())
+    final ContractEntity contractEntity = contractRepository
+        .findByIdAndCustomerId(id, connectedUser.toString())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT));
-    return contractMapper.toContractResponse(contractEntity);
+    return contractMapper.toContractJoinClientResponse(contractEntity);
   }
 
   /**
@@ -47,9 +48,9 @@ public class ContractService {
    * @return contract response
    */
   public List<ContractResponse> getAllContracts() {
-    return contractRepository.findAllByContractDataAndId(UserUtils.getConnectedUser().toString())
+    return contractRepository.findAllDataById(UserUtils.getConnectedUser().toString())
         .map(contract -> contract.stream()
-            .map(contractMapper::toContractResponse)
+            .map(contractMapper::toContractJoinClientResponse)
             .toList())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT));
   }

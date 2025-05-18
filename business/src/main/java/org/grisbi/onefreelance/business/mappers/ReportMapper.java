@@ -37,7 +37,6 @@ public interface ReportMapper {
 
   @Mapping(target = "id", source = "reportEntity.id")
   @Mapping(target = "contractId", source = "reportEntity.reportData.contractId")
-  @Mapping(target = "clientId", source = "reportEntity.reportData.clientId")
   @Mapping(target = "month", source = "reportEntity.reportData.month")
   @Mapping(target = "year", source = "reportEntity.reportData.year")
   @Mapping(target = "billedMonth", source = "reportEntity.reportData.billedMonth")
@@ -54,7 +53,6 @@ public interface ReportMapper {
   /*---------------------------*/
 
   @Mapping(target = "customerId", source = "connectedUser")
-  @Mapping(target = "clientId", source = "reportRequest.clientId")
   @Mapping(target = "contractId", source = "reportRequest.contractId")
   @Mapping(target = "month", source = "reportRequest.month")
   @Mapping(target = "year", source = "reportRequest.year")

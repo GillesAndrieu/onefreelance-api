@@ -18,7 +18,6 @@ import org.grisbi.onefreelance.model.dto.Calculated;
 public class ReportResponse {
 
   UUID id;
-  UUID clientId;
   UUID contractId;
   Integer month;
   Integer year;

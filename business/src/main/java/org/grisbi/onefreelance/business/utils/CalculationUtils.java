@@ -34,7 +34,8 @@ public class CalculationUtils {
     final BigDecimal dailyRate = contract.getContractData().getDailyRate();
     final BigDecimal taxRate = (TaxRateType.CURRENCY.equals(taxRateType)
         ? contract.getContractData().getTaxRate()
-        : dailyRate.multiply(contract.getContractData().getTaxRate()));
+        : dailyRate.multiply(contract.getContractData().getTaxRate()
+        .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)));
 
     final BigDecimal totalDay = reportRequest.getActivity().values().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
 

@@ -15,13 +15,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, UUID> {
 
-  @Query(value = "SELECT c.id, c.contract_data, c.create_at FROM contract c "
-      + "WHERE contract_data ->> 'customer_id' = :id",
+  // Custom query
+  @Query(value = "SELECT c.id, c.contract_data, c.create_at, cl.client_data FROM contract c "
+      + "LEFT JOIN client cl on cl.id::text = c.contract_data ->> 'client_id' "
+      + "WHERE c.contract_data ->> 'customer_id' = :id",
       nativeQuery = true)
-  Optional<List<ContractEntity>> findAllByContractDataAndId(@Param("id") String id);
+  Optional<List<ContractEntity>> findAllDataById(@Param("id") String id);
 
-  @Query(value = "SELECT c.id, c.contract_data, c.create_at FROM contract c "
-      + "WHERE id = :id AND contract_data ->> 'customer_id' = :connectedUser",
+  @Query(value = "SELECT c.id, c.contract_data, c.create_at, cl.client_data FROM contract c "
+      + "LEFT JOIN client cl on cl.id::text = c.contract_data ->> 'client_id' "
+      + "WHERE c.id = :id AND c.contract_data ->> 'customer_id' = :connectedUser",
       nativeQuery = true)
-  Optional<ContractEntity> findByIdAndCustomerId(@Param("id") UUID id, @Param("connectedUser") String connectedUser);
+  Optional<ContractEntity> findByIdAndCustomerId(@Param("id") UUID id,
+                                                 @Param("connectedUser") String connectedUser);
 }

@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.grisbi.onefreelance.model.dto.TaxRateType;
+import org.grisbi.onefreelance.persistence.converter.ClientDataConverter;
 import org.grisbi.onefreelance.persistence.converter.ContractDataConverter;
 import org.hibernate.annotations.ColumnTransformer;
 
@@ -41,6 +42,11 @@ public class ContractEntity implements Serializable {
   @Column(columnDefinition = "jsonb")
   private ContractDataEntity contractData;
 
+  @Convert(converter = ClientDataConverter.class)
+  @ColumnTransformer(write = "?::jsonb")
+  @Column(columnDefinition = "jsonb")
+  private ClientEntity.ClientDataEntity clientData;
+
   /**
    * Data entity.
    */
@@ -51,6 +57,7 @@ public class ContractEntity implements Serializable {
   public static class ContractDataEntity implements Serializable {
 
     private UUID customerId;
+    private UUID clientId;
     private String name;
     private String number;
     private BigDecimal dailyRate;

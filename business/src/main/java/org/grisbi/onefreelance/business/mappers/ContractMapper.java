@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 /**
  * Contract mapper.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {ClientMapper.class})
 public interface ContractMapper {
 
   /*---------------------------*/
@@ -31,6 +31,8 @@ public interface ContractMapper {
   /* Contract RESPONSE         */
   /*---------------------------*/
   @Mapping(target = "id", source = "contractEntity.id")
+  @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
+  @Mapping(target = "client", ignore = true)
   @Mapping(target = "name", source = "contractEntity.contractData.name")
   @Mapping(target = "number", source = "contractEntity.contractData.number")
   @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
@@ -40,10 +42,23 @@ public interface ContractMapper {
   @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
   ContractResponse toContractResponse(final ContractEntity contractEntity);
 
+  @Mapping(target = "id", source = "contractEntity.id")
+  @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
+  @Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(contractEntity.getClientData()))")
+  @Mapping(target = "name", source = "contractEntity.contractData.name")
+  @Mapping(target = "number", source = "contractEntity.contractData.number")
+  @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
+  @Mapping(target = "currencyDailyRate", source = "contractEntity.contractData.currencyDailyRate")
+  @Mapping(target = "taxRate", source = "contractEntity.contractData.taxRate")
+  @Mapping(target = "taxRateType", source = "contractEntity.contractData.taxRateType")
+  @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
+  ContractResponse toContractJoinClientResponse(final ContractEntity contractEntity);
+
   /*---------------------------*/
   /* Contract data Entity      */
   /*---------------------------*/
   @Mapping(target = "customerId", source = "connectedId")
+  @Mapping(target = "clientId", source = "contractRequest.clientId")
   @Mapping(target = "name", source = "contractRequest.name")
   @Mapping(target = "number", source = "contractRequest.number")
   @Mapping(target = "dailyRate", source = "contractRequest.dailyRate")
