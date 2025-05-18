@@ -16,6 +16,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.grisbi.onefreelance.model.dto.Calculated;
+import org.grisbi.onefreelance.persistence.converter.ClientDataConverter;
+import org.grisbi.onefreelance.persistence.converter.ContractDataConverter;
 import org.grisbi.onefreelance.persistence.converter.ReportDataConverter;
 import org.hibernate.annotations.ColumnTransformer;
 
@@ -40,6 +42,16 @@ public class ReportEntity implements Serializable {
   @ColumnTransformer(write = "?::jsonb")
   @Column(columnDefinition = "jsonb")
   private ReportDataEntity reportData;
+
+  @Convert(converter = ContractDataConverter.class)
+  @ColumnTransformer(write = "?::jsonb")
+  @Column(columnDefinition = "jsonb", insertable = false, updatable = false)
+  private ContractEntity.ContractDataEntity contractData;
+
+  @Convert(converter = ClientDataConverter.class)
+  @ColumnTransformer(write = "?::jsonb")
+  @Column(columnDefinition = "jsonb", insertable = false, updatable = false)
+  private ClientEntity.ClientDataEntity clientData;
 
   /**
    * Data entity.

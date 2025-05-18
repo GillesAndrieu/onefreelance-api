@@ -178,10 +178,10 @@ class ContractServiceTest {
     createSecurityContext(UUID.randomUUID());
 
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
-    doNothing().when(contractRepository).deleteById(any());
+    doNothing().when(contractRepository).deleteContract(any());
 
     contractService.deleteContract(UUID.randomUUID());
-    verify(contractRepository).deleteById(any());
+    verify(contractRepository).deleteContract(any());
   }
 
   @Test

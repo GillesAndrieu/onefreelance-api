@@ -52,7 +52,7 @@ class ReportServiceTest {
         .create();
     createSecurityContext(reportEntity.getId());
 
-    given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);
+    given(reportmapper.toReportJoinAllResponse(reportEntity)).willReturn(reportResponse);
     given(reportRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(reportEntity));
 
     final var report = reportService.getReport(UUID.randomUUID());
@@ -77,8 +77,8 @@ class ReportServiceTest {
         .set(field(ReportResponse::getId), reportEntity.getId())
         .create();
     createSecurityContext(reportEntity.getId());
-    given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);
-    given(reportRepository.findAllByReportDataAndId(any())).willReturn(Optional.of(List.of(reportEntity)));
+    given(reportmapper.toReportJoinAllResponse(reportEntity)).willReturn(reportResponse);
+    given(reportRepository.findAllByCustomerId(any())).willReturn(Optional.of(List.of(reportEntity)));
 
     final var report = reportService.getAllReports();
 
@@ -149,10 +149,10 @@ class ReportServiceTest {
     createSecurityContext(reportEntity.getId());
 
     given(reportRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(reportEntity));
-    doNothing().when(reportRepository).deleteById(any());
+    doNothing().when(reportRepository).deleteReport(any());
 
     reportService.deleteReport(UUID.randomUUID());
-    verify(reportRepository).deleteById(any());
+    verify(reportRepository).deleteReport(any());
   }
 
   @Test

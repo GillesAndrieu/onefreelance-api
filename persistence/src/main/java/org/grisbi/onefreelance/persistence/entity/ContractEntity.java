@@ -44,7 +44,7 @@ public class ContractEntity implements Serializable {
 
   @Convert(converter = ClientDataConverter.class)
   @ColumnTransformer(write = "?::jsonb")
-  @Column(columnDefinition = "jsonb")
+  @Column(columnDefinition = "jsonb", insertable = false, updatable = false)
   private ClientEntity.ClientDataEntity clientData;
 
   /**

@@ -7,12 +7,15 @@ import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity.ContractDataEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * Contract mapper.
  */
 @Mapper(componentModel = "spring", imports = {ClientMapper.class})
 public interface ContractMapper {
+
+  ContractMapper INSTANCE = Mappers.getMapper(ContractMapper.class);
 
   /*---------------------------*/
   /* Contract Entity           */
@@ -41,6 +44,19 @@ public interface ContractMapper {
   @Mapping(target = "taxRateType", source = "contractEntity.contractData.taxRateType")
   @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
   ContractResponse toContractResponse(final ContractEntity contractEntity);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "clientId", source = "contractEntity.clientId")
+  @Mapping(target = "client", ignore = true)
+  @Mapping(target = "name", source = "contractEntity.name")
+  @Mapping(target = "number", source = "contractEntity.number")
+  @Mapping(target = "dailyRate", source = "contractEntity.dailyRate")
+  @Mapping(target = "currencyDailyRate", source = "contractEntity.currencyDailyRate")
+  @Mapping(target = "taxRate", source = "contractEntity.taxRate")
+  @Mapping(target = "taxRateType", source = "contractEntity.taxRateType")
+  @Mapping(target = "updateAt", source = "contractEntity.updateAt")
+  @Mapping(target = "createAt", ignore = true)
+  ContractResponse toContractResponse(final ContractDataEntity contractEntity);
 
   @Mapping(target = "id", source = "contractEntity.id")
   @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")

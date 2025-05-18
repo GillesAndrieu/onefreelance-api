@@ -55,7 +55,7 @@ public class ReportService {
     final UUID connectedUser = UserUtils.getConnectedUser();
     final ReportEntity reportEntity = reportRepository.findByIdAndCustomerId(id, connectedUser.toString())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, REPORT_NOT_FOUNT));
-    return reportMapper.toReportResponse(reportEntity);
+    return reportMapper.toReportJoinAllResponse(reportEntity);
   }
 
   /**
@@ -64,9 +64,9 @@ public class ReportService {
    * @return report response
    */
   public List<ReportResponse> getAllReports() {
-    return reportRepository.findAllByReportDataAndId(UserUtils.getConnectedUser().toString())
+    return reportRepository.findAllByCustomerId(UserUtils.getConnectedUser().toString())
         .map(client -> client.stream()
-            .map(reportMapper::toReportResponse)
+            .map(reportMapper::toReportJoinAllResponse)
             .toList())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, REPORT_NOT_FOUNT));
   }
@@ -126,7 +126,7 @@ public class ReportService {
     final Optional<ReportEntity> reportEntity = reportRepository.findByIdAndCustomerId(id,
         UserUtils.getConnectedUser().toString());
     if (reportEntity.isPresent()) {
-      reportRepository.deleteById(id);
+      reportRepository.deleteReport(id);
     } else {
       throw BusinessError.forError(ErrorHandler.NOT_FOUND, REPORT_NOT_FOUNT);
     }

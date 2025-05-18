@@ -19,6 +19,8 @@ public class ReportResponse {
 
   UUID id;
   UUID contractId;
+  ClientResponse client;
+  ContractResponse contract;
   Integer month;
   Integer year;
   Integer billedMonth;
