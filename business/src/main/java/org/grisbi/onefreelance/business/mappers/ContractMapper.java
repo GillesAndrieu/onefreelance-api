@@ -3,7 +3,6 @@ package org.grisbi.onefreelance.business.mappers;
 import java.util.UUID;
 import org.grisbi.onefreelance.model.dto.request.ContractRequest;
 import org.grisbi.onefreelance.model.dto.response.ContractResponse;
-import org.grisbi.onefreelance.persistence.dto.ContractJoinClientEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity.ContractDataEntity;
 import org.mapstruct.Mapper;
@@ -53,7 +52,7 @@ public interface ContractMapper {
   @Mapping(target = "taxRate", source = "contractEntity.contractData.taxRate")
   @Mapping(target = "taxRateType", source = "contractEntity.contractData.taxRateType")
   @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
-  ContractResponse toContractJoinClientResponse(final ContractJoinClientEntity contractEntity);
+  ContractResponse toContractJoinClientResponse(final ContractEntity contractEntity);
 
   /*---------------------------*/
   /* Contract data Entity      */
