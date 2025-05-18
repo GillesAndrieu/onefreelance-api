@@ -51,6 +51,7 @@ public class ContractEntity implements Serializable {
   public static class ContractDataEntity implements Serializable {
 
     private UUID customerId;
+    private UUID clientId;
     private String name;
     private String number;
     private BigDecimal dailyRate;

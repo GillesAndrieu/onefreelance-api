@@ -3,6 +3,7 @@ package org.grisbi.onefreelance.model.dto.request;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -16,6 +17,8 @@ import org.grisbi.onefreelance.model.dto.TaxRateType;
 @Jacksonized
 public class ContractRequest {
 
+  @NotNull
+  UUID clientId;
   @NotNull
   String name;
   @NotNull

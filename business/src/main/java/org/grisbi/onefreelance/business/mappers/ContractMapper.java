@@ -31,6 +31,7 @@ public interface ContractMapper {
   /* Contract RESPONSE         */
   /*---------------------------*/
   @Mapping(target = "id", source = "contractEntity.id")
+  @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
   @Mapping(target = "name", source = "contractEntity.contractData.name")
   @Mapping(target = "number", source = "contractEntity.contractData.number")
   @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
@@ -44,6 +45,7 @@ public interface ContractMapper {
   /* Contract data Entity      */
   /*---------------------------*/
   @Mapping(target = "customerId", source = "connectedId")
+  @Mapping(target = "clientId", source = "contractRequest.clientId")
   @Mapping(target = "name", source = "contractRequest.name")
   @Mapping(target = "number", source = "contractRequest.number")
   @Mapping(target = "dailyRate", source = "contractRequest.dailyRate")
