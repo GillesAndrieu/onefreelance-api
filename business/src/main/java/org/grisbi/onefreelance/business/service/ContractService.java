@@ -12,6 +12,7 @@ import org.grisbi.onefreelance.model.dto.request.ContractRequest;
 import org.grisbi.onefreelance.model.dto.response.ContractResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
 import org.grisbi.onefreelance.model.errors.ErrorHandler;
+import org.grisbi.onefreelance.persistence.dto.ContractJoinClientEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.repository.ContractRepository;
 import org.springframework.stereotype.Service;
@@ -36,9 +37,10 @@ public class ContractService {
    */
   public ContractResponse getContract(final UUID id) {
     final UUID connectedUser = UserUtils.getConnectedUser();
-    final ContractEntity contractEntity = contractRepository.findByIdAndCustomerId(id, connectedUser.toString())
+    final ContractJoinClientEntity contractEntity = contractRepository
+        .findAllDataByIdAndCustomerId(id, connectedUser.toString())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT));
-    return contractMapper.toContractResponse(contractEntity);
+    return contractMapper.toContractJoinClientResponse(contractEntity);
   }
 
   /**
@@ -47,9 +49,9 @@ public class ContractService {
    * @return contract response
    */
   public List<ContractResponse> getAllContracts() {
-    return contractRepository.findAllByContractDataAndId(UserUtils.getConnectedUser().toString())
+    return contractRepository.findAllDataByContractDataAndId(UserUtils.getConnectedUser().toString())
         .map(contract -> contract.stream()
-            .map(contractMapper::toContractResponse)
+            .map(contractMapper::toContractJoinClientResponse)
             .toList())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT));
   }

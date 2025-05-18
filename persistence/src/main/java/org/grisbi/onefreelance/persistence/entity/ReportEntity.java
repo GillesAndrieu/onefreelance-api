@@ -51,7 +51,6 @@ public class ReportEntity implements Serializable {
   public static class ReportDataEntity implements Serializable {
 
     private UUID customerId;
-    private UUID clientId;
     private UUID contractId;
     private Integer month;
     private Integer year;

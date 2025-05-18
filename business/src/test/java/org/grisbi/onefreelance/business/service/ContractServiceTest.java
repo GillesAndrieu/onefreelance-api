@@ -16,6 +16,7 @@ import org.grisbi.onefreelance.business.mappers.ContractMapper;
 import org.grisbi.onefreelance.model.dto.request.ContractRequest;
 import org.grisbi.onefreelance.model.dto.response.ContractResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
+import org.grisbi.onefreelance.persistence.dto.ContractJoinClientEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.repository.ContractRepository;
 import org.grisbi.onefreelance.security.dto.JwtUserDetails;
@@ -41,7 +42,7 @@ class ContractServiceTest {
 
   @Test
   void given_contract_id_when_call_getContract_then_return_contractResponse() {
-    final var contractEntity = Instancio.create(ContractEntity.class);
+    final var contractEntity = Instancio.create(ContractJoinClientEntity.class);
     final var contractResponse = Instancio.of(ContractResponse.class)
         .set(field(ContractResponse::getId), contractEntity.getId())
         .set(field(ContractResponse::getName), contractEntity.getContractData().getName())
@@ -53,8 +54,8 @@ class ContractServiceTest {
         .create();
     createSecurityContext(contractEntity.getId());
 
-    given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
-    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
+    given(contractMapper.toContractJoinClientResponse(contractEntity)).willReturn(contractResponse);
+    given(contractRepository.findAllDataByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
 
     final var contract = contractService.getContract(UUID.randomUUID());
 
@@ -72,14 +73,14 @@ class ContractServiceTest {
     final var id = UUID.randomUUID();
     createSecurityContext(id);
 
-    given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
+    given(contractRepository.findAllDataByIdAndCustomerId(any(), any())).willReturn(Optional.empty());
 
     assertThrows(BusinessError.class, () -> contractService.getContract(id));
   }
 
   @Test
   void when_call_getAllContracts_then_return_contractResponse() {
-    final var contractEntity = Instancio.create(ContractEntity.class);
+    final var contractEntity = Instancio.create(ContractJoinClientEntity.class);
     final var contractResponse = Instancio.of(ContractResponse.class)
         .set(field(ContractResponse::getId), contractEntity.getId())
         .set(field(ContractResponse::getName), contractEntity.getContractData().getName())
@@ -90,8 +91,8 @@ class ContractServiceTest {
         .set(field(ContractResponse::getTaxRateType), contractEntity.getContractData().getTaxRateType())
         .create();
 
-    given(contractMapper.toContractResponse(contractEntity)).willReturn(contractResponse);
-    given(contractRepository.findAllByContractDataAndId(any())).willReturn(Optional.of(List.of(contractEntity)));
+    given(contractMapper.toContractJoinClientResponse(contractEntity)).willReturn(contractResponse);
+    given(contractRepository.findAllDataByContractDataAndId(any())).willReturn(Optional.of(List.of(contractEntity)));
 
     final var contract = contractService.getAllContracts();
 

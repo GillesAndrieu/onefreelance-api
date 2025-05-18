@@ -3,6 +3,7 @@ package org.grisbi.onefreelance.business.mappers;
 import java.util.UUID;
 import org.grisbi.onefreelance.model.dto.request.ContractRequest;
 import org.grisbi.onefreelance.model.dto.response.ContractResponse;
+import org.grisbi.onefreelance.persistence.dto.ContractJoinClientEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 import org.grisbi.onefreelance.persistence.entity.ContractEntity.ContractDataEntity;
 import org.mapstruct.Mapper;
@@ -11,7 +12,7 @@ import org.mapstruct.Mapping;
 /**
  * Contract mapper.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {ClientMapper.class})
 public interface ContractMapper {
 
   /*---------------------------*/
@@ -32,6 +33,7 @@ public interface ContractMapper {
   /*---------------------------*/
   @Mapping(target = "id", source = "contractEntity.id")
   @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
+  @Mapping(target = "client", ignore = true)
   @Mapping(target = "name", source = "contractEntity.contractData.name")
   @Mapping(target = "number", source = "contractEntity.contractData.number")
   @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
@@ -40,6 +42,18 @@ public interface ContractMapper {
   @Mapping(target = "taxRateType", source = "contractEntity.contractData.taxRateType")
   @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
   ContractResponse toContractResponse(final ContractEntity contractEntity);
+
+  @Mapping(target = "id", source = "contractEntity.id")
+  @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
+  @Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(contractEntity.getClientData()))")
+  @Mapping(target = "name", source = "contractEntity.contractData.name")
+  @Mapping(target = "number", source = "contractEntity.contractData.number")
+  @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
+  @Mapping(target = "currencyDailyRate", source = "contractEntity.contractData.currencyDailyRate")
+  @Mapping(target = "taxRate", source = "contractEntity.contractData.taxRate")
+  @Mapping(target = "taxRateType", source = "contractEntity.contractData.taxRateType")
+  @Mapping(target = "updateAt", source = "contractEntity.contractData.updateAt")
+  ContractResponse toContractJoinClientResponse(final ContractJoinClientEntity contractEntity);
 
   /*---------------------------*/
   /* Contract data Entity      */
