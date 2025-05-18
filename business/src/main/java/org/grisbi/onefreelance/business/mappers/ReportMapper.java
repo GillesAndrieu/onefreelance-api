@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 /**
  * Report mapper.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {ClientMapper.class, ContractMapper.class})
 public interface ReportMapper {
 
   /*---------------------------*/
@@ -47,6 +47,20 @@ public interface ReportMapper {
   @Mapping(target = "calculated", source = "reportEntity.reportData.calculated")
   @Mapping(target = "updateAt", source = "reportEntity.reportData.updateAt")
   ReportResponse toReportResponse(final ReportEntity reportEntity);
+
+  @Mapping(target = "id", source = "reportEntity.id")
+  //@Mapping(target = "contract", expression = "java(ContractMapper.INSTANCE.toContractResponse(reportEntity.getContractData()))")
+  //@Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(reportEntity.getClientData()))")
+  @Mapping(target = "month", source = "reportEntity.reportData.month")
+  @Mapping(target = "year", source = "reportEntity.reportData.year")
+  @Mapping(target = "billedMonth", source = "reportEntity.reportData.billedMonth")
+  @Mapping(target = "billedYear", source = "reportEntity.reportData.billedYear")
+  @Mapping(target = "billed", source = "reportEntity.reportData.billed")
+  @Mapping(target = "activity", source = "reportEntity.reportData.activity")
+  @Mapping(target = "bonus", source = "reportEntity.reportData.bonus")
+  @Mapping(target = "calculated", source = "reportEntity.reportData.calculated")
+  @Mapping(target = "updateAt", source = "reportEntity.reportData.updateAt")
+  ReportResponse toReportJoinAllResponse(final ReportEntity reportEntity);
 
   /*---------------------------*/
   /* Client data Entity        */

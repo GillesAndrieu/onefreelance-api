@@ -19,8 +19,6 @@ import lombok.extern.jackson.Jacksonized;
 public class ReportRequest {
 
   @NotNull
-  UUID clientId;
-  @NotNull
   UUID contractId;
   @NotNull
   @Positive

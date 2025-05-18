@@ -98,7 +98,7 @@ public class ContractService {
     final Optional<ContractEntity> contractEntity = contractRepository.findByIdAndCustomerId(id,
         UserUtils.getConnectedUser().toString());
     if (contractEntity.isPresent()) {
-      contractRepository.deleteById(id);
+      contractRepository.deleteContract(id);
     } else {
       throw BusinessError.forError(ErrorHandler.NOT_FOUND, CONTRACT_NOT_FOUNT);
     }

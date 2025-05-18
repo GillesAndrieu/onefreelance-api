@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 import java.util.UUID;
 import org.grisbi.onefreelance.api.controller.ControllerExceptionTranslator;
@@ -17,6 +18,7 @@ import org.grisbi.onefreelance.api.controller.ReportController;
 import org.grisbi.onefreelance.business.service.ReportService;
 import org.grisbi.onefreelance.model.config.JacksonConfig;
 import org.grisbi.onefreelance.model.dto.request.ReportRequest;
+import org.grisbi.onefreelance.model.dto.response.ContractResponse;
 import org.grisbi.onefreelance.model.dto.response.ReportResponse;
 import org.grisbi.onefreelance.model.errors.BusinessError;
 import org.grisbi.onefreelance.model.errors.ErrorHandler;
@@ -49,7 +51,8 @@ class ReportControllerTest {
 
   @Test
   void given_report_id_when_call_getReport_then_return_200_and_ReportResponse() throws Exception {
-    final var report = Instancio.create(ReportResponse.class);
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR")).create();
     given(reportService.getReport(any())).willReturn(report);
 
     mockMvc.perform(MockMvcRequestBuilders
@@ -91,7 +94,8 @@ class ReportControllerTest {
 
   @Test
   void when_call_getAllReports_then_return_200_and_list_of_ReportResponse() throws Exception {
-    final var report = Instancio.create(ReportResponse.class);
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR")).create();
     given(reportService.getAllReports()).willReturn(List.of(report));
 
     mockMvc.perform(MockMvcRequestBuilders
@@ -120,7 +124,9 @@ class ReportControllerTest {
     final var reportRequest = Instancio.of(ReportRequest.class)
         .set(field(ReportRequest::getActivity), Instancio.ofMap(String.class, BigDecimal.class).size(30).create())
         .create();
-    final var report = Instancio.create(ReportResponse.class);
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR"))
+        .create();
     given(reportService.createReport(any())).willReturn(report);
 
     mockMvc.perform(MockMvcRequestBuilders
@@ -166,7 +172,9 @@ class ReportControllerTest {
     final var reportRequest = Instancio.of(ReportRequest.class)
         .set(field(ReportRequest::getActivity), Instancio.ofMap(String.class, BigDecimal.class).size(30).create())
         .create();
-    final var report = Instancio.create(ReportResponse.class);
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR"))
+        .create();
     given(reportService.updateReport(any(), any())).willReturn(report);
 
     mockMvc.perform(MockMvcRequestBuilders
