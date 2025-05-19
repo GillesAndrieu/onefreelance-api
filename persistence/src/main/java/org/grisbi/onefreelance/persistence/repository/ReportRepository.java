@@ -17,6 +17,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReportRepository extends JpaRepository<ReportEntity, UUID> {
 
+  @Query(value = "SELECT DISTINCT r.report_data ->> 'billed_year' FROM report r "
+      + "WHERE r.report_data ->> 'customer_id' = :connectedUser", nativeQuery = true)
+  Optional<List<Integer>> findDistinctYears(@Param("connectedUser") String connectedUser);
+
   @Query(value = "SELECT r.id, r.report_data, r.create_at, c.contract_data, cl.client_data "
       + "FROM report r "
       + "    LEFT JOIN contract c on c.id::text = r.report_data ->> 'contract_id' "
@@ -24,6 +28,15 @@ public interface ReportRepository extends JpaRepository<ReportEntity, UUID> {
       + "WHERE r.report_data ->> 'customer_id' = :id",
       nativeQuery = true)
   Optional<List<ReportEntity>> findAllByCustomerId(@Param("id") String id);
+
+  @Query(value = "SELECT r.id, r.report_data, r.create_at, c.contract_data, cl.client_data "
+      + "FROM report r "
+      + "    LEFT JOIN contract c on c.id::text = r.report_data ->> 'contract_id' "
+      + "    LEFT JOIN client cl on cl.id::text = c.contract_data ->> 'client_id' "
+      + "WHERE r.report_data ->> 'customer_id' = :connectedUser AND r.report_data ->> 'billed_year' = :yearSelected",
+      nativeQuery = true)
+  Optional<List<ReportEntity>> findAllByCustomerIdAndYear(@Param("connectedUser") String connectedUser,
+                                                          @Param("yearSelected") String year);
 
   @Query(value = "SELECT r.id, r.report_data, r.create_at, c.contract_data, cl.client_data "
       + "FROM report r "

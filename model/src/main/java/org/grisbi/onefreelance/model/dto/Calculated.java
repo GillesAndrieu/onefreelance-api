@@ -21,7 +21,7 @@ public class Calculated implements Serializable {
   private BigDecimal totalTaxExcluded;
   private BigDecimal totalTaxIncluded;
   private BigDecimal vat;
-  private BigDecimal totalTaxEnterprise;
+  private BigDecimal totalTaxCompany;
   private BigDecimal totalTaxCustomer;
   private BigDecimal balance;
 }

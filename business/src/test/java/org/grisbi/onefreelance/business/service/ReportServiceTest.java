@@ -97,7 +97,7 @@ class ReportServiceTest {
     createSecurityContext(reportEntity.getId());
 
     ReflectionTestUtils.setField(reportService, "vatPercentage", "0.2");
-    ReflectionTestUtils.setField(reportService, "taxEnterprisePercentage", "0.234");
+    ReflectionTestUtils.setField(reportService, "taxCompanyPercentage", "0.234");
     ReflectionTestUtils.setField(reportService, "taxCustomerPercentage", "0.14");
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);
@@ -119,7 +119,7 @@ class ReportServiceTest {
     createSecurityContext(reportEntity.getId());
 
     ReflectionTestUtils.setField(reportService, "vatPercentage", "0.2");
-    ReflectionTestUtils.setField(reportService, "taxEnterprisePercentage", "0.234");
+    ReflectionTestUtils.setField(reportService, "taxCompanyPercentage", "0.234");
     ReflectionTestUtils.setField(reportService, "taxCustomerPercentage", "0.14");
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);

@@ -49,8 +49,8 @@ public interface ReportMapper {
   ReportResponse toReportResponse(final ReportEntity reportEntity);
 
   @Mapping(target = "id", source = "reportEntity.id")
-  //@Mapping(target = "contract", expression = "java(ContractMapper.INSTANCE.toContractResponse(reportEntity.getContractData()))")
-  //@Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(reportEntity.getClientData()))")
+  @Mapping(target = "contract", expression = "java(ContractMapper.INSTANCE.toContractResponse(reportEntity.getContractData()))")
+  @Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(reportEntity.getClientData()))")
   @Mapping(target = "month", source = "reportEntity.reportData.month")
   @Mapping(target = "year", source = "reportEntity.reportData.year")
   @Mapping(target = "billedMonth", source = "reportEntity.reportData.billedMonth")
