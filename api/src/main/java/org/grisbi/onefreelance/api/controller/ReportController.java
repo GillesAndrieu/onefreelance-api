@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.grisbi.onefreelance.api.swagger.report.DeleteReportDocumentation;
+import org.grisbi.onefreelance.api.swagger.report.GetAllReportsByYearDocumentation;
 import org.grisbi.onefreelance.api.swagger.report.GetAllReportsDocumentation;
 import org.grisbi.onefreelance.api.swagger.report.GetReportDocumentation;
+import org.grisbi.onefreelance.api.swagger.report.GetReportsYearsDocumentation;
 import org.grisbi.onefreelance.api.swagger.report.PatchReportDocumentation;
 import org.grisbi.onefreelance.api.swagger.report.PostReportDocumentation;
 import org.grisbi.onefreelance.business.service.ReportService;
@@ -41,6 +43,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReportController {
 
   private final ReportService reportService;
+
+  /**
+   * Get all distinct years for report created.
+   *
+   * @return all year
+   */
+  @GetReportsYearsDocumentation
+  @GetMapping(value = "/years", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Integer>> getReportsDistinctYears() {
+    return ResponseEntity.ok(reportService.getReportsDistinctYears());
+  }
+
+  /**
+   * Get all reports by year.
+   *
+   * @return all reports
+   */
+  @GetAllReportsByYearDocumentation
+  @GetMapping(value = "/year/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<ReportResponse>> getReportsByYear(@PathVariable final String year) {
+    return ResponseEntity.ok(reportService.getReportsBYear(year));
+  }
 
   /**
    * Get information of all report.

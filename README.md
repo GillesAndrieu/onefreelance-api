@@ -37,7 +37,7 @@
 
 ## Functional promise
 
-OneFreelance ambition is the ability for all customers to create and manage the enterprise.
+OneFreelance ambition is the ability for all customers to create and manage the company.
 
 ## Link utils
 

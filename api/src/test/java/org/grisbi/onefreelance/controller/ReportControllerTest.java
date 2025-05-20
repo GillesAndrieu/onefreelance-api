@@ -50,6 +50,38 @@ class ReportControllerTest {
   private ObjectMapper objectMapper;
 
   @Test
+  void when_call_getReportsDistinctYears_then_return_200_and_list_of_year() throws Exception {
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR")).create();
+    given(reportService.getReportsDistinctYears()).willReturn(List.of(2025));
+
+    mockMvc.perform(MockMvcRequestBuilders
+            .get("/v1/report/years", report.getId())
+            .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.[0]").value("2025"));
+
+    verify(reportService).getReportsDistinctYears();
+  }
+
+  @Test
+  void given_year_when_call_getReportsByYear_then_return_200_and_ReportResponse() throws Exception {
+    final var report = Instancio.of(ReportResponse.class)
+        .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR")).create();
+    given(reportService.getReportsBYear(any())).willReturn(List.of(report));
+
+    mockMvc.perform(MockMvcRequestBuilders
+            .get("/v1/report/year/2025", report.getId())
+            .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(report.getId().toString()));
+
+    verify(reportService).getReportsBYear(any());
+  }
+
+  @Test
   void given_report_id_when_call_getReport_then_return_200_and_ReportResponse() throws Exception {
     final var report = Instancio.of(ReportResponse.class)
         .set(field(ContractResponse::getCurrencyDailyRate), Currency.getInstance("EUR")).create();

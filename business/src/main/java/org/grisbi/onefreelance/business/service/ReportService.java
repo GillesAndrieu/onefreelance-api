@@ -1,10 +1,11 @@
 package org.grisbi.onefreelance.business.service;
 
+import static org.grisbi.onefreelance.business.utils.CalculationUtils.TAX_COMPANY_KEY;
 import static org.grisbi.onefreelance.business.utils.CalculationUtils.TAX_CUSTOMER_KEY;
-import static org.grisbi.onefreelance.business.utils.CalculationUtils.TAX_ENTERPRISE_KEY;
 import static org.grisbi.onefreelance.business.utils.CalculationUtils.VAT_KEY;
 
 import io.vavr.control.Try;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,14 +37,24 @@ public class ReportService {
 
   @Value("${spring.application.configuration.vat-percentage}")
   private String vatPercentage;
-  @Value("${spring.application.configuration.tax-enterprise-percentage}")
-  private String taxEnterprisePercentage;
+  @Value("${spring.application.configuration.tax-company-percentage}")
+  private String taxCompanyPercentage;
   @Value("${spring.application.configuration.tax-customer-percentage}")
   private String taxCustomerPercentage;
   private static final String REPORT_NOT_FOUNT = "Report Not Found";
   private final ReportRepository reportRepository;
   private final ContractRepository contractRepository;
   private final ReportMapper reportMapper;
+
+  /**
+   * Get all distinct year for report created.
+   *
+   * @return all years
+   */
+  public List<Integer> getReportsDistinctYears() {
+    return reportRepository.findDistinctYears(UserUtils.getConnectedUser().toString())
+        .orElse(List.of(ZonedDateTime.now().getYear()));
+  }
 
   /**
    * Get report information by id.
@@ -65,7 +76,21 @@ public class ReportService {
    */
   public List<ReportResponse> getAllReports() {
     return reportRepository.findAllByCustomerId(UserUtils.getConnectedUser().toString())
-        .map(client -> client.stream()
+        .map(report -> report.stream()
+            .map(reportMapper::toReportJoinAllResponse)
+            .toList())
+        .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, REPORT_NOT_FOUNT));
+  }
+
+  /**
+   * Get information for all report by selected year.
+   *
+   * @param year selected
+   * @return report response
+   */
+  public List<ReportResponse> getReportsBYear(final String year) {
+    return reportRepository.findAllByCustomerIdAndYear(UserUtils.getConnectedUser().toString(), year)
+        .map(report -> report.stream()
             .map(reportMapper::toReportJoinAllResponse)
             .toList())
         .orElseThrow(() -> BusinessError.forError(ErrorHandler.NOT_FOUND, REPORT_NOT_FOUNT));
@@ -135,6 +160,6 @@ public class ReportService {
   private Map<String, String> configMap() {
     return Map.of(VAT_KEY, vatPercentage,
         TAX_CUSTOMER_KEY, taxCustomerPercentage,
-        TAX_ENTERPRISE_KEY, taxEnterprisePercentage);
+        TAX_COMPANY_KEY, taxCompanyPercentage);
   }
 }

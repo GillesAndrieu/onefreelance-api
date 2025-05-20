@@ -9,6 +9,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,6 +44,54 @@ class ReportServiceTest {
   private ReportRepository reportRepository;
   @Mock
   private ContractRepository contractRepository;
+
+  @Test
+  void when_call_getReportsDistinctYears_then_return_list_of_years() {
+    createSecurityContext(UUID.randomUUID());
+
+    given(reportRepository.findDistinctYears(any())).willReturn(Optional.of(List.of(2025)));
+
+    final var report = reportService.getReportsDistinctYears();
+
+    assertThat(report.getFirst()).isEqualTo(2025);
+  }
+
+  @Test
+  void when_call_getReportsDistinctYears_and_no_data_then_return_now_year() {
+    createSecurityContext(UUID.randomUUID());
+
+    given(reportRepository.findDistinctYears(any())).willReturn(Optional.empty());
+
+    final var report = reportService.getReportsDistinctYears();
+
+    assertThat(report.getFirst()).isEqualTo(ZonedDateTime.now().getYear());
+  }
+
+  @Test
+  void given_year_when_call_getReportsByYear_then_return_reportResponse() {
+    final var reportEntity = Instancio.create(ReportEntity.class);
+    final var reportResponse = Instancio.of(ReportResponse.class)
+        .set(field(ReportResponse::getId), reportEntity.getId())
+        .create();
+    createSecurityContext(reportEntity.getId());
+
+    given(reportmapper.toReportJoinAllResponse(reportEntity)).willReturn(reportResponse);
+    given(reportRepository.findAllByCustomerIdAndYear(any(), any())).willReturn(Optional.of(List.of(reportEntity)));
+
+    final var report = reportService.getReportsBYear(reportEntity.getReportData().getYear().toString());
+
+    assertThat(report.getFirst().getId()).isEqualTo(reportEntity.getId());
+  }
+
+  @Test
+  void given_year_not_found_when_call_getReportsByYear_then_return_BusinessError() {
+    final var id = UUID.randomUUID();
+
+    createSecurityContext(id);
+    given(reportRepository.findAllByCustomerIdAndYear(any(), any())).willReturn(Optional.empty());
+
+    assertThrows(BusinessError.class, () -> reportService.getReportsBYear("2025"));
+  }
 
   @Test
   void given_report_id_when_call_getReport_then_return_reportResponse() {
@@ -97,7 +146,7 @@ class ReportServiceTest {
     createSecurityContext(reportEntity.getId());
 
     ReflectionTestUtils.setField(reportService, "vatPercentage", "0.2");
-    ReflectionTestUtils.setField(reportService, "taxEnterprisePercentage", "0.234");
+    ReflectionTestUtils.setField(reportService, "taxCompanyPercentage", "0.234");
     ReflectionTestUtils.setField(reportService, "taxCustomerPercentage", "0.14");
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);
@@ -119,7 +168,7 @@ class ReportServiceTest {
     createSecurityContext(reportEntity.getId());
 
     ReflectionTestUtils.setField(reportService, "vatPercentage", "0.2");
-    ReflectionTestUtils.setField(reportService, "taxEnterprisePercentage", "0.234");
+    ReflectionTestUtils.setField(reportService, "taxCompanyPercentage", "0.234");
     ReflectionTestUtils.setField(reportService, "taxCustomerPercentage", "0.14");
     given(contractRepository.findByIdAndCustomerId(any(), any())).willReturn(Optional.of(contractEntity));
     given(reportmapper.toReportResponse(reportEntity)).willReturn(reportResponse);

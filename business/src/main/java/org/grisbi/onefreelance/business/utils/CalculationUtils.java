@@ -16,7 +16,7 @@ import org.grisbi.onefreelance.persistence.entity.ContractEntity;
 public class CalculationUtils {
 
   public static final String VAT_KEY = "vat";
-  public static final String TAX_ENTERPRISE_KEY = "tax_enterprise";
+  public static final String TAX_COMPANY_KEY = "tax_company";
   public static final String TAX_CUSTOMER_KEY = "tax_customer";
 
   /**
@@ -45,11 +45,11 @@ public class CalculationUtils {
     final BigDecimal vat = totalTaxExcluded.multiply(new BigDecimal(parameters.get(VAT_KEY)))
         .setScale(2, RoundingMode.HALF_UP);
     final BigDecimal totalTaxIncluded = totalTaxExcluded.add(vat).setScale(2, RoundingMode.HALF_UP);
-    final BigDecimal totalTaxEnterprise = totalTaxExcluded.multiply(new BigDecimal(parameters.get(TAX_ENTERPRISE_KEY)))
+    final BigDecimal totalTaxCompany = totalTaxExcluded.multiply(new BigDecimal(parameters.get(TAX_COMPANY_KEY)))
         .setScale(2, RoundingMode.HALF_UP);
     final BigDecimal totalTaxCustomer = totalTaxExcluded.multiply(new BigDecimal(parameters.get(TAX_CUSTOMER_KEY)))
         .setScale(2, RoundingMode.HALF_UP);
-    final BigDecimal balance = totalTaxExcluded.subtract(totalTaxEnterprise).subtract(totalTaxCustomer)
+    final BigDecimal balance = totalTaxExcluded.subtract(totalTaxCompany).subtract(totalTaxCustomer)
         .setScale(2, RoundingMode.HALF_UP);
 
     return Calculated.builder()
@@ -58,7 +58,7 @@ public class CalculationUtils {
         .totalTaxExcluded(totalTaxExcluded)
         .vat(vat)
         .totalTaxIncluded(totalTaxIncluded)
-        .totalTaxEnterprise(totalTaxEnterprise)
+        .totalTaxCompany(totalTaxCompany)
         .totalTaxCustomer(totalTaxCustomer)
         .balance(balance)
         .build();

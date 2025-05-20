@@ -3,7 +3,7 @@ spring:
     name: oneFreelance
     configuration:
       vat-percentage: 0.2
-      tax-enterprise-percentage: 0.247
+      tax-company-percentage: 0.247
       tax-customer-percentage: 0.14
   jackson:
     property-naming-strategy: SNAKE_CASE
