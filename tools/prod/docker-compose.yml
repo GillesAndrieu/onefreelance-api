@@ -1,0 +1,40 @@
+services:
+
+  onefreelance-api:
+    image: onefreelance-api:latest
+    depends_on:
+      - postgres
+    environment:
+      PG_UL: "jdbc:postgresql://postgres:5432/onefreelance"
+      PG_URL_LINK: "jdbc:postgresql://postgres:5432/onefreelance?currentSchema=onefreelance"
+      PG_SCHEMA: "onefreelance"
+      PG_USERNAME: "admin"
+      PG_PASSWORD: "admin"
+      GOOGLE_CLIENT_ID: ""
+      GOOGLE_CLIENT_SECRET: ""
+    ports:
+      - '8081:8080'
+
+  onefreelance-front:
+    image: onefreelance-front:latest
+    depends_on:
+      - onefreelance-api
+    environment:
+      VITE_API_URL: "http://localhost:8081"
+      VITE_GOOGLE_CLIENT_ID: ""
+    ports:
+      - '5100:80'
+
+  postgres:
+    image: postgres:17.2-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: onefreelance
+      PGDATA: /data/postgres
+    volumes:
+      - type: bind
+        source: ./docker/data/postgres-data
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"

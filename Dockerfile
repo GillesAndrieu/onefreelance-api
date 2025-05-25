@@ -19,7 +19,7 @@ COPY --from=java-build build/spring-boot-loader/ ./
 COPY --from=java-build build/snapshot-dependencies/ ./
 COPY --from=java-build build/application/ ./
 
-ENTRYPOINT ["java", "$JAVA_AGENT", "$JAVA_OPTS", "org.springframework.boot.loader.launch.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
 
 
 
