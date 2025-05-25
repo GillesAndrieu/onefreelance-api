@@ -15,7 +15,7 @@ dependencies {
 bootJar {
     enabled = true
     archiveFileName = "api-${version}.jar"
-    mainClass = 'org.grisbi.onefreelance.api.FreelanceApplication'
+    mainClass = 'org.grisbi.onefreelance.FreelanceApplication'
 }
 
 sonar {

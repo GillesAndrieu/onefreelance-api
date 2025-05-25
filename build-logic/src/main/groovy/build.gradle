@@ -12,7 +12,7 @@ ext.versions = [
         swagger       : '2.2.28',
         instancio     : '5.3.0',
         jqwik         : '1.9.2',
-        jakartaXml    : '2.3.3',
+        jakartaXml    : '4.0.2',
         testcontainers: '1.19.8',
         dbunit        : '6.0.0',
         // fix vulnerabilities

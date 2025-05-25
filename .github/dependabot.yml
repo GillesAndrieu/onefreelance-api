@@ -9,7 +9,7 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: gradle
-    directory: "/buildSrc/src/main/groovy/"
+    directory: "/build-logic/src/main/groovy/"
     schedule:
       interval: daily
       time: "07:00"
