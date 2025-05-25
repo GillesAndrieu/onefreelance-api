@@ -1,287 +1,1004 @@
 {
-  "info": {
-    "_postman_id": "6e860b3a-8140-412c-bf2d-3cbb9419a206",
-    "name": "OneFreelance",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "41278364"
-  },
-  "item": [
-    {
-      "name": "Customer",
-      "item": [
-        {
-          "name": "Customer By ID",
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "user-agent": true,
-              "accept-encoding": true,
-              "connection": true,
-              "accept": true
-            }
-          },
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{api_url}}/v1/customer/{{customer-id}}",
-              "host": [
-                "{{api_url}}"
-              ],
-              "path": [
-                "v1",
-                "customer",
-                "{{customer-id}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "All Customers",
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "user-agent": true,
-              "accept-encoding": true,
-              "connection": true,
-              "accept": true
-            }
-          },
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{api_url}}/v1/customer",
-              "host": [
-                "{{api_url}}"
-              ],
-              "path": [
-                "v1",
-                "customer"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create Customer",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "",
-                  "pm.collectionVariables.set(\"customer-id\", pm.response.json().id);"
-                ],
-                "type": "text/javascript",
-                "packages": {}
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "user-agent": true,
-              "accept-encoding": true,
-              "connection": true,
-              "accept": true
-            }
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"firstname\": \"John\",\n    \"lastname\": \"DOE\",\n    \"email\": \"john.doe@gmail.com\",\n    \"roles\": [\"ROLE_USER\"],\n    \"active\": true\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{api_url}}/v1/customer",
-              "host": [
-                "{{api_url}}"
-              ],
-              "path": [
-                "v1",
-                "customer"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update Customer",
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "user-agent": true,
-              "accept-encoding": true,
-              "connection": true,
-              "accept": true
-            }
-          },
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"firstname\": \"Johnny\",\n    \"lastname\": \"DOEZ\",\n    \"email\": \"johnny.doez@gmail.com\",\n    \"roles\": [\"ROLE_ADMIN\"],\n    \"active\": false\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{api_url}}/v1/customer/{{customer-id}}",
-              "host": [
-                "{{api_url}}"
-              ],
-              "path": [
-                "v1",
-                "customer",
-                "{{customer-id}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete Customer",
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "user-agent": true,
-              "accept-encoding": true,
-              "connection": true,
-              "accept": true
-            }
-          },
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{api_url}}/v1/customer/{{customer-id}}",
-              "host": [
-                "{{api_url}}"
-              ],
-              "path": [
-                "v1",
-                "customer",
-                "{{customer-id}}"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    }
-  ],
-  "auth": {
-    "type": "oauth2",
-    "oauth2": [
-      {
-        "key": "accessTokenUrl",
-        "value": "https://oauth2.googleapis.com/token",
-        "type": "string"
-      },
-      {
-        "key": "scope",
-        "value": "openid profile email",
-        "type": "string"
-      },
-      {
-        "key": "useBrowser",
-        "value": true,
-        "type": "boolean"
-      },
-      {
-        "key": "grant_type",
-        "value": "authorization_code",
-        "type": "string"
-      },
-      {
-        "key": "clientSecret",
-        "value": "{{google_client_secret}}",
-        "type": "string"
-      },
-      {
-        "key": "clientId",
-        "value": "{{google_client_id}}",
-        "type": "string"
-      },
-      {
-        "key": "tokenName",
-        "value": "tokenOne",
-        "type": "string"
-      },
-      {
-        "key": "authUrl",
-        "value": "https://accounts.google.com/o/oauth2/auth",
-        "type": "string"
-      },
-      {
-        "key": "addTokenTo",
-        "value": "header",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "customer-id",
-      "value": ""
-    }
-  ]
+	"info": {
+		"_postman_id": "6e860b3a-8140-412c-bf2d-3cbb9419a206",
+		"name": "OneFreelance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41278364"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Customer By ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/customer/{{customer-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"customer",
+								"{{customer-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Customers",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/customer",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set(\"customer-id\", pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\": \"John\",\n    \"lastname\": \"DOE\",\n    \"email\": \"john.doe@gmail.com\",\n    \"roles\": [\"ROLE_USER\"],\n    \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/customer",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\": \"Johnny\",\n    \"lastname\": \"DOEZ\",\n    \"email\": \"johnny.doez@gmail.com\",\n    \"roles\": [\"ROLE_ADMIN\"],\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/customer/{{customer-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"customer",
+								"{{customer-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/customer/{{customer-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"customer",
+								"{{customer-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Client By ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/client/{{client-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"{{client-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Clients",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/client",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set(\"client-id\", pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"client name\",\n    \"address\": {\n        \"number\": \"1\",\n        \"street\": \"fake street\",\n        \"city\": \"Lille\",\n        \"postal_code\": \"59000\"\n    },\n    \"siret\": \"111 222 333 444 55\",\n    \"referent\": \"Véronique DOE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/client",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"client name\",\n    \"address\": {\n        \"number\": \"1\",\n        \"street\": \"fake street\",\n        \"city\": \"Lille\",\n        \"postal_code\": \"59000\"\n    },\n    \"siret\": \"111 222 333 444 55\",\n    \"referent\": \"Véronique DOE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/client/{{client-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"{{client-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Client",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/client/{{client-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"{{client-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contract",
+			"item": [
+				{
+					"name": "Contract By ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/contract/{{contract-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"contract",
+								"{{contract-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Contracts",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/contract",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"contract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set(\"contract-id\", pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client_id\": \"{{client-id}}\",\n    \"name\": \"contract name\",\n    \"number\": \"2025-1234\",\n    \"daily_rate\": \"500.4\",\n    \"currency_daily_rate\": \"EUR\",\n    \"tax_rate\": \"15\",\n    \"tax_rate_type\": \"CURRENCY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/contract",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"contract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contract",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client_id\": \"{{client-id}}\",\n    \"name\": \"contract name\",\n    \"number\": \"2025-1234\",\n    \"daily_rate\": \"500\",\n    \"currency_daily_rate\": \"EUR\",\n    \"tax_rate\": \"15\",\n    \"tax_rate_type\": \"CURRENCY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/contract/{{contract-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"contract",
+								"{{contract-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contract",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/contract/{{contract-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"contract",
+								"{{contract-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Report By ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/report/{{report-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report",
+								"{{report-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All reports",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/report",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All distinct years",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/report/years",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report",
+								"years"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All reports by year",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/report/year/2025",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report",
+								"year",
+								"2025"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create report",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set(\"report-id\", pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contract_id\": \"{{contract-id}}\",\n    \"month\": 1,\n    \"year\": 2025,\n    \"billed_month\": 3,\n    \"billed_year\": 2025,\n    \"billed\": false,\n    \"bonus\": 500,\n    \"activity\": {\n        \"1\": 0,\n        \"2\": 1,\n        \"3\": 1,\n        \"4\": 0,\n        \"5\": 0,\n        \"6\": 1,\n        \"7\": 1,\n        \"8\": 1,\n        \"9\": 1,\n        \"10\": 1,\n        \"11\": 0,\n        \"12\": 0,\n        \"13\": 1,\n        \"14\": 1,\n        \"15\": 1,\n        \"16\": 1,\n        \"17\": 1,\n        \"18\": 0,\n        \"19\": 0,\n        \"20\": 1,\n        \"21\": 1,\n        \"22\": 1,\n        \"23\": 1,\n        \"24\": 1,\n        \"25\": 0,\n        \"26\": 0,\n        \"27\": 1,\n        \"28\": 1,\n        \"29\": 1,\n        \"30\": 1,\n        \"31\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/report",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update report",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contract_id\": \"{{contract-id}}\",\n    \"month\": 12,\n    \"year\": 2024,\n    \"billed_month\": 3,\n    \"billed_year\": 2025,\n    \"billed\": false,\n    \"bonus\": 200,\n    \"activity\": {\n        \"1\": 0,\n        \"2\": 1,\n        \"3\": 1,\n        \"4\": 0,\n        \"5\": 0,\n        \"6\": 1,\n        \"7\": 1,\n        \"8\": 1,\n        \"9\": 1,\n        \"10\": 1,\n        \"11\": 0,\n        \"12\": 0,\n        \"13\": 1,\n        \"14\": 1,\n        \"15\": 1,\n        \"16\": 1,\n        \"17\": 1,\n        \"18\": 0,\n        \"19\": 0,\n        \"20\": 1,\n        \"21\": 1,\n        \"22\": 1,\n        \"23\": 1,\n        \"24\": 1,\n        \"25\": 0,\n        \"26\": 0,\n        \"27\": 1,\n        \"28\": 1,\n        \"29\": 1,\n        \"30\": 1,\n        \"31\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/v1/report/{{report-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report",
+								"{{report-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete report",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/v1/report/{{report-id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"v1",
+								"report",
+								"{{report-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notify",
+			"item": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "https://oauth2.googleapis.com/token",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid profile email",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": true,
+				"type": "boolean"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{google_client_secret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{google_client_id}}",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "tokenOne",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://accounts.google.com/o/oauth2/auth",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "customer-id",
+			"value": ""
+		},
+		{
+			"key": "contract-id",
+			"value": ""
+		},
+		{
+			"key": "client-id",
+			"value": ""
+		},
+		{
+			"key": "report-id",
+			"value": ""
+		}
+	]
 }
