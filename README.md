@@ -34,6 +34,7 @@
     - [Github Actions](#github-actions)
 - [Team's Dev Guidelines](#teams-dev-guidelines)
 - [How-to's Intellij configuration](#intellij-ide-configuration)
+- [Create Google credentials](#create-google-credentials)
 
 ## Functional promise
 
@@ -58,3 +59,7 @@ If you are not yet familiar with Github actions please start from [here](https:/
 ## Intellij IDE configuration
 
 [How-to's Intellij configuration](docs/configide/README.md)
+
+## Create Google credentials
+
+[How-to's Google configuration](docs/configgoogle/README.md)
