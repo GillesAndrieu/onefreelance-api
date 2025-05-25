@@ -22,11 +22,13 @@ public interface ContractMapper {
   /*---------------------------*/
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createAt", expression = "java(Instant.now())")
+  @Mapping(target = "clientData", ignore = true)
   @Mapping(target = "contractData", expression = "java(toContractDataEntity(contractRequest, connectedId))")
   ContractEntity toCreateContractEntity(final ContractRequest contractRequest, final UUID connectedId);
 
   @Mapping(target = "id", source = "id")
   @Mapping(target = "createAt", ignore = true)
+  @Mapping(target = "clientData", ignore = true)
   @Mapping(target = "contractData", expression = "java(toContractDataEntity(contractRequest, connectedId))")
   ContractEntity toUpdateContractEntity(final UUID id, final ContractRequest contractRequest, final UUID connectedId);
 
@@ -60,7 +62,8 @@ public interface ContractMapper {
 
   @Mapping(target = "id", source = "contractEntity.id")
   @Mapping(target = "clientId", source = "contractEntity.contractData.clientId")
-  @Mapping(target = "client", expression = "java(ClientMapper.INSTANCE.toClientResponse(contractEntity.getClientData()))")
+  @Mapping(target = "client",
+      expression = "java(ClientMapper.INSTANCE.toClientResponse(contractEntity.getClientData()))")
   @Mapping(target = "name", source = "contractEntity.contractData.name")
   @Mapping(target = "number", source = "contractEntity.contractData.number")
   @Mapping(target = "dailyRate", source = "contractEntity.contractData.dailyRate")
