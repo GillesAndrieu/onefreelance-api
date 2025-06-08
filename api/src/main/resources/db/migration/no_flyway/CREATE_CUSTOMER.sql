@@ -1,0 +1,1 @@
+INSERT INTO onefreelance.customer (id, customer_data, create_at) VALUES ('f1aa6642-7e5d-49a8-940e-55a6f258bd68', '{"email": "john.doe@gmail.com", "roles": ["ROLE_ADMIN", "ROLE_USER"], "active": true, "lastname": "DOE", "firstname": "John", "update_at": "2025-02-15T21:43:49.771660Z"}', null)
