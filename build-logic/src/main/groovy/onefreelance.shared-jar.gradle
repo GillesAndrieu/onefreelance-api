@@ -1,6 +1,5 @@
 plugins {
     // Internal
-    id 'build'
     id 'onefreelance.base'
     id "io.spring.dependency-management"
 }
@@ -26,22 +25,22 @@ dependencies {
     compileOnly "org.springframework.security:spring-security-oauth2-jose"
     compileOnly "org.springframework.security:spring-security-oauth2-resource-server"
     // Auth JWT
-    compileOnly "com.auth0:java-jwt:${versions.javaJwt}"
+    compileOnly libs.javaJwt
     // Swagger
-    compileOnly "io.swagger.core.v3:swagger-core:${versions.swagger}"
+    compileOnly libs.swaggerCore
     // Vavr
-    implementation "io.vavr:vavr:${versions.vavr}"
+    implementation libs.vavr
     // MapStruct
-    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
-    implementation "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
-    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    implementation libs.mapstruct
+    implementation libs.mapstructProcessor
+    annotationProcessor libs.mapstructProcessor
     // Lombok
-    compileOnly "org.projectlombok:lombok:${versions.lombok}"
-    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
     // Jackson
-    compileOnly "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${versions.jackson}"
+    compileOnly libs.jackson
     // Jakarta
-    runtimeOnly "jakarta.xml.bind:jakarta.xml.bind-api:${versions.jakartaXml}"
+    runtimeOnly libs.jakartaXml
     // -------------------------
     // Test dependencies
     // -------------------------
@@ -49,17 +48,17 @@ dependencies {
     testImplementation "org.springframework.security:spring-security-test"
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation "org.springframework.security:spring-security-oauth2-jose"
-    testRuntimeOnly "org.junit.platform:junit-platform-launcher:${versions.junit}"
-    testImplementation "org.instancio:instancio-junit:${versions.instancio}"
-    testImplementation "net.jqwik:jqwik:${versions.jqwik}"
-    testImplementation "io.vavr:vavr:${versions.vavr}"
-    testImplementation "org.testcontainers:junit-jupiter:${versions.testcontainers}"
-    testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
-    testImplementation "com.github.ppodgorsek:spring-test-dbunit-core:${versions.dbunit}"
+    testRuntimeOnly libs.junit
+    testImplementation libs.instancio
+    testImplementation libs.jqwik
+    testImplementation libs.vavr
+    testImplementation libs.junitJupiter
+    testImplementation libs.containerPostgres
+    testImplementation libs.dbunit
     testImplementation "org.mockito:mockito-core"
-    testImplementation "org.mockito:mockito-inline:${versions.mockito}"
-    testImplementation "com.auth0:java-jwt:${versions.javaJwt}"
-    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${versions.jackson}"
-    testImplementation "org.projectlombok:lombok:${versions.lombok}"
-    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+    testImplementation libs.mockito
+    testImplementation libs.javaJwt
+    testImplementation libs.jackson
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
 }
