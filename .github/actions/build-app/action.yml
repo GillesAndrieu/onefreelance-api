@@ -37,7 +37,7 @@ runs:
         restore-keys: ${{ runner.os }}-gradle
 
     - name: Test the application and analyse it
-      run: ./gradlew build test jacocoTestReport sonar --i
+      run: ./gradlew build test jacocoTestReport sonar --i -Dorg.gradle.configuration-cache=false
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
