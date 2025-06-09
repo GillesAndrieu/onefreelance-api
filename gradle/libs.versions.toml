@@ -1,6 +1,6 @@
 [versions]
 flyway        = '11.9.1'
-lombok        = '1.18.36'
+lombok        = '1.18.38'
 postgres      = '42.7.6'
 hibernate     = '7.0.0.Final'
 junit         = '1.11.4'
