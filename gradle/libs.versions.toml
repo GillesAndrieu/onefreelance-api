@@ -13,7 +13,7 @@ swagger       = '2.2.32'
 instancio     = '5.4.1'
 jqwik         = '1.9.2'
 jakartaXml    = '4.0.2'
-testcontainers= '1.19.8'
+testcontainers= '1.21.1'
 dbunit        = '6.0.0'
 openapi       = '2.8.4'
 
