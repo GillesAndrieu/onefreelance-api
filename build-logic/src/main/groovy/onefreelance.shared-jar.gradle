@@ -48,7 +48,9 @@ dependencies {
     testImplementation "org.springframework.security:spring-security-test"
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation "org.springframework.security:spring-security-oauth2-jose"
-    testRuntimeOnly libs.junit
+    testRuntimeOnly libs.junitLauncher
+    testRuntimeOnly libs.junitEngine
+    testRuntimeOnly libs.junitCommons
     testImplementation libs.instancio
     testImplementation libs.jqwik
     testImplementation libs.vavr
