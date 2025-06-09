@@ -2,7 +2,7 @@
 flyway        = '11.2.0'
 lombok        = '1.18.36'
 postgres      = '42.7.6'
-hibernate     = '6.6.4.Final'
+hibernate     = '7.0.0.Final'
 junit         = '1.11.4'
 mockito       = '5.2.0'
 vavr          = '0.10.5'
