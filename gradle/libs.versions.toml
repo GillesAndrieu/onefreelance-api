@@ -3,7 +3,7 @@ flyway        = '11.9.1'
 lombok        = '1.18.38'
 postgres      = '42.7.6'
 hibernate     = '7.0.0.Final'
-junit         = '1.11.4'
+junit         = '1.13.1'
 mockito       = '5.2.0'
 vavr          = '0.10.6'
 javaJwt       = '4.5.0'
@@ -11,7 +11,7 @@ mapstruct     = '1.6.3'
 jackson       = '2.19.0'
 swagger       = '2.2.32'
 instancio     = '5.4.1'
-jqwik         = '1.9.2'
+jqwik         = '1.9.3'
 jakartaXml    = '4.0.2'
 testcontainers= '1.21.1'
 dbunit        = '6.0.0'
@@ -30,7 +30,9 @@ mapstructProcessor = { module = "org.mapstruct:mapstruct-processor", version.ref
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 jackson = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 jakartaXml = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jakartaXml" }
-junit = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+junitLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+junitEngine = { module = "org.junit.platform:junit-platform-engine", version.ref = "junit" }
+junitCommons = { module = "org.junit.platform:junit-platform-commons", version.ref = "junit" }
 instancio = { module = "org.instancio:instancio-junit", version.ref = "instancio" }
 jqwik = { module = "net.jqwik:jqwik", version.ref = "jqwik" }
 junitJupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
