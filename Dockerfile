@@ -1,5 +1,5 @@
 # FROM adoptopenjdk/openjdk15:alpine-jre AS java-build
-FROM openjdk:25-jdk AS java-build
+FROM openjdk:26-jdk AS java-build
 ARG module_name
 WORKDIR /build/
 
@@ -10,7 +10,7 @@ RUN java -Djarmode=layertools -jar application.jar extract
 
 # ====================================================================================
 
-FROM openjdk:25-jdk
+FROM openjdk:26-jdk
 WORKDIR /app/
 
 # Create a layered JAR using spring boot fat jar artifacts
