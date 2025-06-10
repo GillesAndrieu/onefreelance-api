@@ -15,7 +15,7 @@ jqwik         = '1.9.3'
 jakartaXml    = '4.0.2'
 testcontainers= '1.21.1'
 dbunit        = '6.0.0'
-openapi       = '2.8.8'
+openapi       = '2.8.9'
 
 [libraries]
 flywayCore = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
