@@ -1,7 +1,7 @@
 [versions]
 flyway        = '11.9.1'
 lombok        = '1.18.38'
-postgres      = '42.7.6'
+postgres      = '42.7.7'
 hibernate     = '7.0.0.Final'
 junit         = '1.13.1'
 mockito       = '5.2.0'
