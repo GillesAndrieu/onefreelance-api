@@ -51,7 +51,7 @@ jobs:
       repository-projects: read
     name: Test - Analyze apps
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set tag
         id: set-tag
